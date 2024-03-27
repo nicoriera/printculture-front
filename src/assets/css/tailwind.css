@@ -1,0 +1,14 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply tracking-wider font-normal;
+  }
+  h1 {
+    @apply font-semibold text-xl md:text-3xl;
+    letter-spacing: 1.8px;
+  }
+}

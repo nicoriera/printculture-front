@@ -1,0 +1,11 @@
+@import './tailwind.css';
+@import './fonts.css';
+
+html,
+body {
+  @apply h-full;
+}
+
+#app {
+  @apply min-h-full w-full;
+}
