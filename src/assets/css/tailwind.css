@@ -5,7 +5,7 @@
 
 @layer base {
   html {
-    @apply tracking-wider font-normal;
+    @apply tracking-wider font-normal p-4;
   }
   h1 {
     @apply font-semibold text-xl md:text-3xl;
