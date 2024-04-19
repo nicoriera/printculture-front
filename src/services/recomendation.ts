@@ -1,4 +1,10 @@
 import api from '../api/index'
+
+export interface IRecommendation {
+  id: number
+  title: string
+  description: string
+}
 const useHomeService = () => {
   const getRecommendations = async () => {
     try {
@@ -9,7 +15,7 @@ const useHomeService = () => {
     }
   }
 
-  const addRecommendation = async (data) => {
+  const addRecommendation = async (data: IRecommendation) => {
     try {
       const response = await api.post(`/api/v1/recommendations`, data)
       return response.data
@@ -18,7 +24,7 @@ const useHomeService = () => {
     }
   }
 
-  const deleteRecommendation = async (id) => {
+  const deleteRecommendation = async (id: number) => {
     try {
       const response = await api.delete(`/api/v1/recommendations/${id}`)
       return response.data
@@ -27,10 +33,20 @@ const useHomeService = () => {
     }
   }
 
+  const updateRecommendation = async (data: IRecommendation) => {
+    try {
+      const response = await api.put(`/api/v1/recommendations/${data.id}`, data)
+      return response.data
+    } catch (error) {
+      throw new Error('Failed to update recommendation')
+    }
+  }
+
   return {
     getRecommendations,
     addRecommendation,
-    deleteRecommendation
+    deleteRecommendation,
+    updateRecommendation
   }
 }
 
