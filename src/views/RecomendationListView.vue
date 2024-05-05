@@ -33,7 +33,7 @@ onMounted(fetchRecomendations)
 
 <template>
   <HeaderApp />
-  <section class="flex flex-wrap justify-between gap-2 m-16">
+  <section class="flex flex-wrap justify-between gap-2 m-10">
     <RecomendationCard />
 
     <RecomendationAddButton @click="handleRecomendationModal" />
