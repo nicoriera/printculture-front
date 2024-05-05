@@ -1,9 +1,9 @@
 import api from '../api/index'
 
 export interface IRecommendation {
-  id: number
-  title: string
-  description: string
+  id?: number
+  title?: string
+  description?: string
 }
 const useHomeService = () => {
   const getRecommendations = async () => {

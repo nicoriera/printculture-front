@@ -5,7 +5,7 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      class="w-24 h-24 cursor-pointer bg-slate-50 rounded-full text-blue-500 hover:text-blue-600 shadow-lg"
+      class="w-24 h-24 cursor-pointer bg-white rounded-full text-blue-500 hover:text-blue-600 shadow-lg"
     >
       <path
         fill-rule="evenodd"

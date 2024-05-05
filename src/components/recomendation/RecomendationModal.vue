@@ -74,7 +74,7 @@ const handleAddRecomendation = (event: Event) => {
 <template>
   <div
     id="modal-add-recomendation"
-    class="w-2/4 flex p-4 m-4 shadow-md rounded-md z-100 fixed bg-white/95"
+    class="w-2/4 flex p-4 m-4 shadow-lg border-2 border-black z-100 fixed bg-white"
     ref="modal"
   >
     <form class="flex-col" action="submit">
@@ -93,14 +93,14 @@ const handleAddRecomendation = (event: Event) => {
       <div class="my-6">
         <div class="flex-col inline-flex w-full">
           <label for="title">Title</label>
-          <input class="border rounded-xl px-2 p-2" type="text" v-model="title" />
+          <input class="border-2 rounded-xl px-2 p-2" type="text" v-model="title" />
         </div>
         <div class="flex-col inline-flex w-full mt-2">
           <label for="description">Description</label>
           <textarea
             cols="5"
             rows="5"
-            class="border rounded-xl px-2 p-4"
+            class="border-2 rounded-xl px-2 p-4"
             type="text"
             v-model="description"
           >
