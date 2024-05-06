@@ -8,6 +8,8 @@ import HeaderApp from '@/components/HeaderApp.vue'
 
 const recomendations = ref([])
 
+let isModalOpen = ref(false)
+
 const fetchRecomendations = async () => {
   try {
     const homeService = useHomeService()
@@ -21,6 +23,7 @@ const fetchRecomendations = async () => {
 const openModal = () => {
   const modal = document.getElementById('modal-add-recomendation')
   modal?.classList.add('open')
+  isModalOpen.value = true
 }
 
 const handleRecomendationModal = () => {
@@ -33,12 +36,15 @@ onMounted(fetchRecomendations)
 
 <template>
   <HeaderApp />
-  <section class="flex flex-wrap justify-between gap-2 m-10">
+  <section
+    :class="{ 'opacity-80 overflow-hidden select-none': isModalOpen }"
+    class="flex flex-wrap justify-between gap-2 m-10"
+  >
     <RecomendationCard />
 
     <RecomendationAddButton @click="handleRecomendationModal" />
 
-    <RecomendationModal />
+    <RecomendationModal v-if="isModalOpen" />
   </section>
 </template>
 

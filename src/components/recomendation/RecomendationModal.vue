@@ -24,18 +24,27 @@ const dragStart = (event) => {
   elOffY.value = event.target.offsetTop
 }
 
+let animationFrameId = ref(null)
+
 const drag = (event) => {
   if (!dragging.value) return
-  event.target.style.left = elOffX.value + event.clientX - startX.value + 'px'
-  event.target.style.top = elOffY.value + event.clientY - startY.value + 'px'
+  cancelAnimationFrame(animationFrameId.value)
+  animationFrameId.value = requestAnimationFrame(() => {
+    event.target.style.left = elOffX.value + event.clientX - startX.value + 'px'
+    event.target.style.top = elOffY.value + event.clientY - startY.value + 'px'
+  })
 }
 
 const dragEnd = () => {
   dragging.value = false
+  cancelAnimationFrame(animationFrameId.value)
 }
 
 const title = ref('')
 const description = ref('')
+const tag = ref('')
+const category = ref('')
+const link = ref('')
 
 const recomendations = ref([])
 
@@ -47,6 +56,9 @@ const closeModal = () => {
 const resetForm = () => {
   title.value = ''
   description.value = ''
+  tag.value = ''
+  category.value = ''
+  link.value = ''
 }
 
 const fetchAddRecomendation = async () => {
@@ -54,10 +66,13 @@ const fetchAddRecomendation = async () => {
     const homeService = useHomeService()
     const recomendation = {
       title: title.value,
-      description: description.value
+      description: description.value,
+      tag: tag.value,
+      category: category.value,
+      link: link.value
     }
     const data = await homeService.addRecommendation(recomendation)
-    recomendations.value.push(data)
+    recomendations.value.push(data as any)
     resetForm()
   } catch (error) {
     console.error(error)
@@ -74,7 +89,7 @@ const handleAddRecomendation = (event: Event) => {
 <template>
   <div
     id="modal-add-recomendation"
-    class="w-2/4 flex p-4 m-4 shadow-lg border-2 border-black z-100 fixed bg-white"
+    class="w-2/4 flex p-4 m-4 shadow-lg border-2 rounded-2xl border-black z-900 fixed bg-white bg-opacity-100"
     ref="modal"
   >
     <form class="flex-col" action="submit">
@@ -90,6 +105,17 @@ const handleAddRecomendation = (event: Event) => {
           a new recomendation.
         </p>
       </div>
+      <div class="flex flex-row gap-4">
+        <div class="w-1/2 flex flex-col">
+          <label for="category">Category</label>
+          <input class="border-2 rounded-xl px-2 p-2" type="text" v-model="category" />
+        </div>
+        <div class="w-1/2 flex-col inline-flex">
+          <label for="tag">Tag</label>
+          <input class="border-2 rounded-xl px-2 p-2" type="text" v-model="tag" />
+        </div>
+      </div>
+
       <div class="my-6">
         <div class="flex-col inline-flex w-full">
           <label for="title">Title</label>
@@ -105,6 +131,10 @@ const handleAddRecomendation = (event: Event) => {
             v-model="description"
           >
           </textarea>
+        </div>
+        <div class="flex-col inline-flex w-full mt-2">
+          <label for="link">Link</label>
+          <input class="border-2 rounded-xl px-2 p-2" type="text" v-model="link" />
         </div>
       </div>
       <button
