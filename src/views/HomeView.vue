@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import headerApp from '../components/HeaderApp.vue'
+import HeaderApp from '../components/HeaderApp.vue'
 </script>
 <template>
-  <headerApp />
+  <HeaderApp />
   <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
       <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
