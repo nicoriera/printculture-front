@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import useHomeService from '@/services/recomendation'
 
-let modal = ref(null)
+let modal = ref()
 let dragging = ref(false)
 let startX = ref(0)
 let startY = ref(0)
@@ -16,7 +16,7 @@ onMounted(() => {
   modal.value.addEventListener('mouseleave', dragEnd)
 })
 
-const dragStart = (event) => {
+const dragStart = (event: any) => {
   dragging.value = true
   startX.value = event.clientX
   startY.value = event.clientY
@@ -24,9 +24,9 @@ const dragStart = (event) => {
   elOffY.value = event.target.offsetTop
 }
 
-let animationFrameId = ref(null)
+let animationFrameId = ref()
 
-const drag = (event) => {
+const drag = (event: any) => {
   if (!dragging.value) return
   cancelAnimationFrame(animationFrameId.value)
   animationFrameId.value = requestAnimationFrame(() => {
@@ -72,7 +72,7 @@ const fetchAddRecomendation = async () => {
       link: link.value
     }
     const data = await homeService.addRecommendation(recomendation)
-    recomendations.value.push(data as any)
+    recomendations.value.push(data as never)
     resetForm()
   } catch (error) {
     console.error(error)
