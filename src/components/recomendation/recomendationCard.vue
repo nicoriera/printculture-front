@@ -33,7 +33,7 @@ const fetchDeleteRecomendation = async (movie: IRecommendation) => {
   try {
     const homeService = useHomeService()
     await homeService.deleteRecommendation(movie.id!)
-    recomendations.value = recomendations.value.filter((m) => m.id !== movie.id)
+    recomendations.value = recomendations.value.filter((m: IRecommendation) => m.id !== movie.id)
   } catch (error) {
     console.error(error)
   }
