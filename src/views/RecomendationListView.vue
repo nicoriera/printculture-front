@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import useHomeService from '../services/recomendation'
-import RecomendationCard from '../components/recomendation/RecomendationCard.vue'
-import RecomendationModal from '../components/recomendation/RecomendationModal.vue'
-import RecomendationAddButton from '../components/recomendation/RecomendationAddButton.vue'
+import useHomeService from '@/services/recomendation'
+import RecomendationCard from '@/components/recomendation/RecomendationCard.vue'
+import RecomendationModal from '@/components/recomendation/RecomendationModal.vue'
+import RecomendationAddButton from '@/components/recomendation/RecomendationAddButton.vue'
 
 const recomendations = ref([])
 
