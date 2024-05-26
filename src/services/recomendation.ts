@@ -11,7 +11,7 @@ export interface IRecommendation {
 const useHomeService = () => {
   const getRecommendations = async () => {
     try {
-      const response = await api.get(`/api/v1/recommendations`)
+      const response = await api.get('/api/v1/recommendations')
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch spaces')
