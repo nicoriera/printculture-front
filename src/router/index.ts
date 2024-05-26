@@ -4,7 +4,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/recomendations',
+      path: '/',
       name: 'recomendation',
       component: () => import('../views/RecomendationListView.vue')
     }
