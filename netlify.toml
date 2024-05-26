@@ -1,0 +1,2 @@
+VUE_APP_API_URL=https://printculture-back-305e2b31136f.herokuapp.com/
+VUE_APP_API_URL_LOCAL=http://localhost:3000/
