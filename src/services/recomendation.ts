@@ -1,5 +1,7 @@
 import api from '../api/index'
 
+const apiUrl = import.meta.env.VITE_APP_API_URL
+
 export interface IRecommendation {
   id?: number
   title?: string
@@ -11,16 +13,22 @@ export interface IRecommendation {
 const useHomeService = () => {
   const getRecommendations = async () => {
     try {
-      const response = await api.get('/api/v1/recommendations')
-      return response.data
+      const response = await fetch(`${apiUrl}/api/v1/recommendations`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json()
+      console.log('Recommendations:', data)
+
+      return data
     } catch (error) {
-      throw new Error('Failed to fetch spaces')
+      console.error('Error fetching recommendations:', error)
     }
   }
 
   const addRecommendation = async (data: IRecommendation) => {
     try {
-      const response = await api.post(`/api/v1/recommendations`, data)
+      const response = await api.post(`${apiUrl}/api/v1/recommendations`, data)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch spaces')
@@ -29,7 +37,7 @@ const useHomeService = () => {
 
   const deleteRecommendation = async (id: number) => {
     try {
-      const response = await api.delete(`/api/v1/recommendations/${id}`)
+      const response = await api.delete(`${apiUrl}/api/v1/recommendations/${id}`)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch spaces')
@@ -38,7 +46,7 @@ const useHomeService = () => {
 
   const updateRecommendation = async (data: IRecommendation) => {
     try {
-      const response = await api.put(`/api/v1/recommendations/${data.id}`, data)
+      const response = await api.put(`${apiUrl}/api/v1/recommendations${data.id}`, data)
       return response.data
     } catch (error) {
       throw new Error('Failed to update recommendation')
