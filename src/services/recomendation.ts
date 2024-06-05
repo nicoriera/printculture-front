@@ -13,9 +13,9 @@ export interface IRecommendation {
 const useHomeService = () => {
   const getRecommendations = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/v1/recommendations`)
+      const response = await fetch(`${apiUrl}/recommendations`)
       if (!response.ok) {
-        throw new Error('Network response was not ok')
+        throw new Error('Network response was not ok' + response.statusText)
       }
       const data = await response.json()
       console.log('Recommendations:', data)
@@ -28,7 +28,7 @@ const useHomeService = () => {
 
   const addRecommendation = async (data: IRecommendation) => {
     try {
-      const response = await api.post(`${apiUrl}/api/v1/recommendations`, data)
+      const response = await api.post(`${apiUrl}/recommendations`, data)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch spaces')
@@ -37,7 +37,7 @@ const useHomeService = () => {
 
   const deleteRecommendation = async (id: number) => {
     try {
-      const response = await api.delete(`${apiUrl}/api/v1/recommendations/${id}`)
+      const response = await api.delete(`${apiUrl}/recommendations/${id}`)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch spaces')
@@ -46,7 +46,7 @@ const useHomeService = () => {
 
   const updateRecommendation = async (data: IRecommendation) => {
     try {
-      const response = await api.put(`${apiUrl}/api/v1/recommendations${data.id}`, data)
+      const response = await api.put(`${apiUrl}/recommendations${data.id}`, data)
       return response.data
     } catch (error) {
       throw new Error('Failed to update recommendation')
