@@ -1,4 +1,11 @@
 [build]
-  command = "npm run build"
+  # Répertoire de construction de l'application
   publish = "dist"
+  # Commande de construction
+  command = "npm run build"
 
+[[redirects]]
+  # Redirection pour traiter les routes côté client
+  from = "/*"
+  to = "/index.html"
+  status = 200
