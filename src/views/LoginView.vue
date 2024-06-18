@@ -35,7 +35,7 @@ const login = async () => {
     if (email.value === 'user@example.com' && password.value === 'password') {
       localStorage.setItem('authToken', 'your_token') // Stockez le token d'authentification
       isAuthenticated.value = true
-      await router.push({ name: 'home' }) // Redirigez vers la page d'accueil
+      await router.push({ name: 'recomendations' }) // Redirigez vers la page d'accueil
     } else {
       passwordError.value = 'Invalid email or password.'
     }

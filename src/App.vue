@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 // Utiliser useRouter pour obtenir l'instance du routeur
 const router = useRouter()
 const isAuthenticated = ref(!!localStorage.getItem('authToken')) // Etat de connexion
+const isMobileMenuOpen = ref(false) // Etat du menu mobile
 
 const handleToLogin = () => {
   router.push('/login')
@@ -14,6 +15,10 @@ const handleLogout = () => {
   localStorage.removeItem('authToken') // Supprimer le token d'authentification
   isAuthenticated.value = false
   router.push('/') // Rediriger vers la page d'accueil ou de connexion
+}
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 </script>
 
@@ -43,14 +48,15 @@ const handleLogout = () => {
           </button>
 
           <button
-            data-collapse-toggle="mobile-menu-2"
+            @click="toggleMobileMenu"
             type="button"
             class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="mobile-menu-2"
-            aria-expanded="false"
+            aria-expanded="isMobileMenuOpen"
           >
             <span class="sr-only">Open main menu</span>
             <svg
+              v-if="!isMobileMenuOpen"
               class="w-6 h-6"
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -63,7 +69,8 @@ const handleLogout = () => {
               ></path>
             </svg>
             <svg
-              class="hidden w-6 h-6"
+              v-else
+              class="w-6 h-6"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +84,16 @@ const handleLogout = () => {
           </button>
         </div>
         <div
-          class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+          :class="{
+            hidden: !isMobileMenuOpen,
+            flex: isMobileMenuOpen,
+            'justify-between': true,
+            'items-center': true,
+            'w-full': true,
+            'lg:flex': true,
+            'lg:w-auto': true,
+            'lg:order-1': true
+          }"
           id="mobile-menu-2"
         >
           <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
