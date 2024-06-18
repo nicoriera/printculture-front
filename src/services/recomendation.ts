@@ -46,7 +46,7 @@ const useHomeService = () => {
 
   const updateRecommendation = async (data: IRecommendation) => {
     try {
-      const response = await api.put(`${apiUrl}/recommendations${data.id}`, data)
+      const response = await api.put(`${apiUrl}/recommendations/${data.id}`, data)
       return response.data
     } catch (error) {
       throw new Error('Failed to update recommendation')
