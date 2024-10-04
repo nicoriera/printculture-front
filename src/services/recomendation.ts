@@ -1,15 +1,8 @@
 import api from '../api/index'
+import type { IRecommendation } from '@/types/recommendation'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL
 
-export interface IRecommendation {
-  id?: number
-  title?: string
-  description?: string
-  link?: string
-  category?: string
-  tag?: string
-}
 const useHomeService = () => {
   const getRecommendations = async () => {
     try {
@@ -23,6 +16,19 @@ const useHomeService = () => {
       return data
     } catch (error) {
       console.error('Error fetching recommendations:', error)
+    }
+  }
+
+  const getRecommendationById = async (id: number) => {
+    try {
+      const response = await fetch(`${apiUrl}/recommendations/${id}`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok' + response.statusText)
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error('Error fetching recommendation by id:', error)
     }
   }
 
@@ -55,6 +61,7 @@ const useHomeService = () => {
 
   return {
     getRecommendations,
+    getRecommendationById,
     addRecommendation,
     deleteRecommendation,
     updateRecommendation
