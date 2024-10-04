@@ -17,12 +17,16 @@ export default function useRecommendations() {
   }
 
   const deleteRecommendation = async (recommendation: IRecommendation) => {
-    try {
-      const homeService = useHomeService()
-      await homeService.deleteRecommendation(recommendation.id)
-      recommendations.value = recommendations.value.filter((r) => r.id !== recommendation.id)
-    } catch (error) {
-      console.error(error)
+    if (recommendation.id !== undefined) {
+      try {
+        const homeService = useHomeService()
+        await homeService.deleteRecommendation(recommendation.id)
+        recommendations.value = recommendations.value.filter((r) => r.id !== recommendation.id)
+      } catch (error) {
+        console.error(error)
+      }
+    } else {
+      console.error('Cannot delete recommendation without an id')
     }
   }
 
