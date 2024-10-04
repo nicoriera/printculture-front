@@ -1,3 +1,4 @@
+import path from 'path'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Exemple de fonction pour vérifier l'état de connexion
@@ -15,6 +16,12 @@ const routes = [
     path: '/recomendations',
     name: 'recomendations',
     component: () => import('../views/RecomendationListView.vue'),
+    meta: { requiresAuth: true } // Ajout de meta pour indiquer que cette route nécessite une authentification
+  },
+  {
+    path: '/recomendations/:id',
+    name: 'recommendationDetails',
+    component: () => import('../views/RecomendationDetailsView.vue'),
     meta: { requiresAuth: true } // Ajout de meta pour indiquer que cette route nécessite une authentification
   },
   {
