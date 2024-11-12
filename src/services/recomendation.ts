@@ -3,7 +3,7 @@ import type { IRecommendation } from '@/types/recommendation'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL
 
-const useHomeService = () => {
+const useRecommendationService = () => {
   const getRecommendations = async () => {
     try {
       const response = await fetch(`${apiUrl}/recommendations`)
@@ -68,4 +68,4 @@ const useHomeService = () => {
   }
 }
 
-export default useHomeService
+export default useRecommendationService

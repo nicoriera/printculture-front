@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from 'vue'
 import useHomeService from '../services/recomendation'
 import type { IRecommendation } from '../types/recommendation'
 import { useRouter } from 'vue-router'
+import useRecommendationService from '../services/recomendation'
 
 // Définir les variables manquantes
 const recommendations = ref<IRecommendation[]>([])
@@ -14,6 +15,11 @@ const tag = ref('')
 const category = ref('')
 const link = ref('')
 const videoLink = ref('')
+
+const books = ref<IRecommendation[]>([])
+const movies = ref<IRecommendation[]>([])
+const musics = ref<IRecommendation[]>([])
+const podcasts = ref<IRecommendation[]>([])
 
 const isMobile = ref(window.innerWidth < 768)
 
@@ -102,8 +108,20 @@ const getCardColorByCategory = (category: string) => {
 // Vous devrez probablement ajouter une fonction pour charger les recommandations initiales
 const fetchRecommendations = async () => {
   try {
-    const homeService = useHomeService()
-    recommendations.value = await homeService.getRecommendations()
+    const recommendationService = useRecommendationService()
+    recommendations.value = await recommendationService.getRecommendations()
+    books.value = recommendations.value.filter(
+      (recommendation) => recommendation.category === 'Book'
+    )
+    movies.value = recommendations.value.filter(
+      (recommendation) => recommendation.category === 'Movie'
+    )
+    musics.value = recommendations.value.filter(
+      (recommendation) => recommendation.category === 'Music'
+    )
+    podcasts.value = recommendations.value.filter(
+      (recommendation) => recommendation.category === 'Podcast'
+    )
   } catch (error) {
     console.error(error)
   }
@@ -133,68 +151,126 @@ const handleAddRecommendation = async () => {
 <template>
   <div class="w-full pt-14" :class="{ 'overflow-hidden': isModalOpen }">
     <section class="flex flex-col gap-4 p-4 dark:bg-gray-900 min-h-screen">
-      <!-- Bouton d'ajout pour mobile (en haut de la liste) -->
-      <button
-        v-if="isMobile && !isModalOpen"
-        @click="handleRecommendationModal"
-        class="bg-blue-500 text-white rounded-lg py-3 px-4 mb-4 hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          class="w-6 h-6 mr-2"
+      <!-- Header -->
+      <div class="flex justify-between items-center">
+        <p class="text-gray-700 font-semibold text-lg dark:text-gray-300">Recommendations</p>
+        <button
+          v-if="isMobile && !isModalOpen"
+          @click="handleRecommendationModal"
+          class="bg-gray-700 h-12 w-12 text-white rounded-xl hover:bg-gray-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-        Add Recommendation
-      </button>
-
-      <!-- Liste des recommandations -->
-      <div
-        v-for="movie in recommendations"
-        :key="movie.id"
-        :class="[getCardColorByCategory(movie.category ?? ''), 'rounded-xl p-4 shadow-md']"
-      >
-        <div class="flex justify-between items-center mb-2">
-          <p class="text-gray-600 font-semibold">{{ movie.category }}</p>
-          <p class="text-gray-500 text-sm border rounded-lg p-1 bg-gray-50">
-            {{ movie.tag }}
-          </p>
-        </div>
-        <h3 class="font-medium text-lg mb-2">{{ movie.title }}</h3>
-        <p class="text-gray-700 mb-2 line-clamp-2">{{ movie.description }}</p>
-        <div v-if="movie.videoLink" class="mb-2">
-          <iframe
-            :src="movie.videoLink"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            class="w-full h-48"
-          ></iframe>
-        </div>
-        <a :href="movie.link" target="_blank" class="text-blue-500 hover:text-blue-700 block mb-2">
-          View Link
-        </a>
-        <div class="flex justify-between items-center">
-          <button @click="goToRecommendation(movie)" class="text-blue-500 hover:text-blue-700">
-            Details
-          </button>
-          <button
-            @click.stop="fetchDeleteRecommendation(movie)"
-            class="text-red-500 hover:text-red-700"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="w-6 h-6"
           >
-            Delete
-          </button>
-        </div>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </button>
       </div>
 
+      <!-- Liste des recommandations movies -->
+      <div class="inline-flex overflow-x-auto w-full mt-8 mb-4 gap-4">
+        <div
+          v-for="movie in movies"
+          :key="movie.id"
+          :class="[getCardColorByCategory(movie.category ?? ''), 'rounded-xl  p-4 shadow-md']"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <p class="text-gray-600 font-semibold">{{ movie.category }}</p>
+            <p class="text-gray-500 text-sm border rounded-lg p-1 bg-gray-50">
+              {{ movie.tag }}
+            </p>
+          </div>
+          <h3 class="font-medium text-lg mb-2">{{ movie.title }}</h3>
+          <p class="text-gray-700 mb-2 line-clamp-2">{{ movie.description }}</p>
+          <div v-if="movie.videoLink" class="mb-2">
+            <iframe
+              :src="movie.videoLink"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-48"
+            ></iframe>
+          </div>
+          <a
+            :href="movie.link"
+            target="_blank"
+            class="text-blue-500 hover:text-blue-700 block mb-2"
+          >
+            View Link
+          </a>
+          <div class="flex justify-between items-center">
+            <button @click="goToRecommendation(movie)" class="text-blue-500 hover:text-blue-700">
+              Details
+            </button>
+            <button
+              @click.stop="fetchDeleteRecommendation(movie)"
+              class="text-red-500 hover:text-red-700"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Liste des recommandations musics -->
+      <div class="inline-flex overflow-x-auto w-full gap-4">
+        <div
+          v-for="music in musics"
+          :key="music.id"
+          :class="[getCardColorByCategory(music.category ?? ''), 'rounded-xl  p-4 shadow-md']"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <p class="text-gray-600 font-semibold">{{ music.category }}</p>
+            <p class="text-gray-500 text-sm border rounded-lg p-1 bg-gray-50">
+              {{ music.tag }}
+            </p>
+          </div>
+          <h3 class="font-medium text-lg mb-2">{{ music.title }}</h3>
+          <p class="text-gray-700 mb-2 line-clamp-2">{{ music.description }}</p>
+
+          <div class="flex justify-between items-center">
+            <button @click="goToRecommendation(music)" class="text-blue-500 hover:text-blue-700">
+              Details
+            </button>
+            <button
+              @click.stop="fetchDeleteRecommendation(music)"
+              class="text-red-500 hover:text-red-700"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Liste des recommandations podcasts -->
+      <div class="inline-flex overflow-x-auto w-full mt-8 mb-4 gap-4">
+        <div
+          v-for="podcast in podcasts"
+          :key="podcast.id"
+          :class="[getCardColorByCategory(podcast.category ?? ''), 'rounded-xl  p-4 shadow-md']"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <p class="text-gray-600 font-semibold">{{ podcast.category }}</p>
+            <p class="text-gray-500 text-sm border rounded-lg p-1 bg-gray-50">
+              {{ podcast.tag }}
+            </p>
+          </div>
+          <h3 class="font-medium text-lg mb-2">{{ podcast.title }}</h3>
+          <p class="text-gray-700 mb-2 line-clamp-2">{{ podcast.description }}</p>
+          <div class="flex justify-between items-center">
+            <button @click="goToRecommendation(podcast)" class="text-blue-500 hover:text-blue-700">
+              Details
+            </button>
+          </div>
+        </div>
+      </div>
       <!-- Modal d'ajout (modifiée pour mobile et fixation du fond) -->
       <div
         v-if="isModalOpen"
