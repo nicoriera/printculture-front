@@ -4,6 +4,11 @@
   # Commande de construction
   command = "npm run build"
 
+[build.environment]
+  NODE_VERSION = "18.19.1"
+
+
+
 [[redirects]]
   # Redirection pour traiter les routes côté client
   from = "/*"
