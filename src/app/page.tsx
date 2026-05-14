@@ -1,103 +1,112 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <section className="w-3/4 mx-auto">
+      <div className="text-center">
+        <div className="mx-auto h-dvh flex flex-col justify-center mb-8 lg:mb-16">
+          <h1 className="mb-4 text-9xl tracking-tight font-extrabold text-blue-500">
+            PRINT TEAM
+          </h1>
+          <p className="font-light text-neutral-500 sm:text-xl">
+            Connect with our print mate.
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className="mx-auto h-dvh flex flex-col justify-center mb-8 lg:mb-16">
+          <h2 className="mb-4 text-4xl tracking-tight font-bold text-blue-600">
+            Partagez vos coups de cœur entre amis !
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-blue-50 p-6 rounded-2xl shadow-sm border border-blue-200/30">
+              <h3 className="text-xl font-semibold mb-2 text-blue-600">
+                🤝 Réseau privé
+              </h3>
+              <p className="text-neutral-600">
+                Créez votre cercle intime de partage. Ici, vos recommandations
+                restent entre vous et vos proches, comme un club secret des bons
+                plans !
+              </p>
+            </div>
+            <div className="bg-green-50 p-6 rounded-2xl shadow-sm border border-green-200/30">
+              <h3 className="text-xl font-semibold mb-2 text-green-600">
+                🌟 Recommandations personnalisées
+              </h3>
+              <p className="text-neutral-600">
+                Films, livres, musiques ou podcasts : partagez vos découvertes
+                préférées et recevez des suggestions sur mesure de vos amis !
+              </p>
+            </div>
+            <div className="bg-orange-50 p-6 rounded-2xl shadow-sm border border-orange-200/30">
+              <h3 className="text-xl font-semibold mb-2 text-orange-600">
+                💬 Échangez et discutez
+              </h3>
+              <p className="text-neutral-600">
+                Commentez les recommandations, débattez de vos impressions et
+                approfondissez vos liens autour de vos passions communes !
+              </p>
+            </div>
+          </div>
+          <p className="mt-6 text-center text-neutral-500">
+            Rejoignez dès maintenant votre cercle de confiance et commencez à
+            partager vos pépites culturelles !
+          </p>
+        </div>
+
+        <div className="mx-auto h-dvh flex flex-col justify-center mb-8 lg:mb-16">
+          <h2 className="mb-6 text-3xl tracking-tight font-bold text-neutral-700">
+            Discutez en temps réel avec notre chat intégré !
+          </h2>
+          <div className="bg-red-50 p-6 rounded-2xl shadow-sm border border-red-200/30">
+            <h3 className="text-xl font-semibold mb-4 text-red-600">
+              🗨️ Échangez instantanément
+            </h3>
+            <ul className="space-y-2 text-neutral-600">
+              <li className="flex items-center">
+                <svg
+                  className="w-4 h-4 mr-2 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Discutez en privé ou en groupe
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="w-4 h-4 mr-2 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Partagez des liens et des médias facilement
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="w-4 h-4 mr-2 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Restez connecté avec vos amis cinéphiles, mélomanes et lecteurs
+              </li>
+            </ul>
+            <p className="mt-4 text-neutral-500">
+              Avec notre chat intégré, vos discussions autour de vos passions
+              n&apos;ont jamais été aussi fluides !
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
