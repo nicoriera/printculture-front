@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+/* Font faces */
+@font-face {
+  font-family: "Poppins";
+  font-weight: 400;
+  src: url("./fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 500;
+  src: url("./fonts/Poppins-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 600;
+  src: url("./fonts/Poppins-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 700;
+  src: url("./fonts/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "DMSerifText";
+  font-weight: 400;
+  src: url("./fonts/DMSerifText-Regular.ttf") format("truetype");
+}
+
+:root {
+  /* Palette de couleurs pastel ultra légères - Bleu, Orange, Vert, Rouge */
+  --background: #fefefe;
+  --foreground: #64748b;
+  
+  /* BLEU - Couleurs primaires pastel très douces */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+  
+  /* ORANGE - Couleurs secondaires pastel */
+  --orange-50: #fff7ed;
+  --orange-100: #ffedd5;
+  --orange-200: #fed7aa;
+  --orange-300: #fdba74;
+  --orange-400: #fb923c;
+  --orange-500: #f97316;
+  --orange-600: #ea580c;
+  --orange-700: #c2410c;
+  --orange-800: #9a3412;
+  --orange-900: #7c2d12;
+  
+  /* VERT - Couleurs d'accent */
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-200: #bbf7d0;
+  --green-300: #86efac;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --green-800: #166534;
+  --green-900: #14532d;
+  
+  /* ROUGE - Couleurs d'accent */
+  --red-50: #fef2f2;
+  --red-100: #fee2e2;
+  --red-200: #fecaca;
+  --red-300: #fca5a5;
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+  --red-800: #991b1b;
+  --red-900: #7f1d1d;
+  
+  /* NEUTRES - Très clairs */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  
+  /* Couleurs pour les catégories - pastel ultra légères */
+  --category-movie: #fff7ed; /* Orange très clair */
+  --category-book: #f0fdf4; /* Vert très clair */
+  --category-music: #fef2f2; /* Rouge très clair */
+  --category-podcast: #eff6ff; /* Bleu très clair */
+  
+  /* Couleurs de texte */
+  --text-primary: #64748b;
+  --text-secondary: #a3a3a3;
+  --text-light: #d4d4d4;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* BLEU */
+  --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-200: var(--blue-200);
+  --color-blue-300: var(--blue-300);
+  --color-blue-400: var(--blue-400);
+  --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900);
+  
+  /* ORANGE */
+  --color-orange-50: var(--orange-50);
+  --color-orange-100: var(--orange-100);
+  --color-orange-200: var(--orange-200);
+  --color-orange-300: var(--orange-300);
+  --color-orange-400: var(--orange-400);
+  --color-orange-500: var(--orange-500);
+  --color-orange-600: var(--orange-600);
+  --color-orange-700: var(--orange-700);
+  --color-orange-800: var(--orange-800);
+  --color-orange-900: var(--orange-900);
+  
+  /* VERT */
+  --color-green-50: var(--green-50);
+  --color-green-100: var(--green-100);
+  --color-green-200: var(--green-200);
+  --color-green-300: var(--green-300);
+  --color-green-400: var(--green-400);
+  --color-green-500: var(--green-500);
+  --color-green-600: var(--green-600);
+  --color-green-700: var(--green-700);
+  --color-green-800: var(--green-800);
+  --color-green-900: var(--green-900);
+  
+  /* ROUGE */
+  --color-red-50: var(--red-50);
+  --color-red-100: var(--red-100);
+  --color-red-200: var(--red-200);
+  --color-red-300: var(--red-300);
+  --color-red-400: var(--red-400);
+  --color-red-500: var(--red-500);
+  --color-red-600: var(--red-600);
+  --color-red-700: var(--red-700);
+  --color-red-800: var(--red-800);
+  --color-red-900: var(--red-900);
+  
+  /* NEUTRES */
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+
+  /* Couleurs pour les catégories */
+  --color-category-movie: var(--category-movie);
+  --color-category-book: var(--category-book);
+  --color-category-music: var(--category-music);
+  --color-category-podcast: var(--category-podcast);
+  
+  /* Couleurs de texte */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-light: var(--text-light);
+  
+  /* Polices */
+  --font-sans: "Poppins", ui-sans-serif, system-ui;
+  --font-serif: "DMSerifText", ui-serif, Georgia;
+  --font-mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
+    Consolas, "Courier New", monospace;
+}
+
+
+html,
+body {
+  height: 100%;
+  font-family: var(--font-sans);
+  letter-spacing: 0.05em;
+}
+
+#__next {
+  min-height: 100%;
+  width: 100%;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
