@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     await uploadFile("recommendations-files", file, filePath);
 
     // Get public URL
-    const publicUrl = await getPublicUrl("recommendations-files", filePath);
+    const publicUrl = getPublicUrl("recommendations-files", filePath);
 
     return successResponse(
       {
