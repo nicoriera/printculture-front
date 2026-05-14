@@ -1,35 +1,44 @@
-import { createClient } from "@supabase/supabase-js";
-
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-export const supabase = createClient(supabaseUrl, supabaseKey);
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export async function uploadFile(bucket: string, file: File, path: string) {
-  const { data, error } = await supabase.storage
-    .from(bucket)
-    .upload(path, file, {
-      cacheControl: "3600",
-      upsert: false,
-    });
+  const arrayBuffer = await file.arrayBuffer();
+  const response = await fetch(
+    `${supabaseUrl}/storage/v1/object/${bucket}/${path}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${serviceRoleKey}`,
+        "Content-Type": file.type,
+        "x-upsert": "false",
+        "Cache-Control": "3600",
+      },
+      body: arrayBuffer,
+    }
+  );
 
-  if (error) {
+  if (!response.ok) {
+    const error = await response.json();
     throw new Error(`Upload failed: ${error.message}`);
   }
-
-  return data;
 }
 
-export async function getPublicUrl(bucket: string, path: string) {
-  const { data } = supabase.storage.from(bucket).getPublicUrl(path);
-
-  return data.publicUrl;
+export function getPublicUrl(bucket: string, path: string): string {
+  return `${supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
 }
 
 export async function deleteFile(bucket: string, path: string) {
-  const { error } = await supabase.storage.from(bucket).remove([path]);
+  const response = await fetch(`${supabaseUrl}/storage/v1/object/${bucket}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${serviceRoleKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ prefixes: [path] }),
+  });
 
-  if (error) {
+  if (!response.ok) {
+    const error = await response.json();
     throw new Error(`Delete failed: ${error.message}`);
   }
 }
