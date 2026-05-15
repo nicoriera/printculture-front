@@ -50,6 +50,11 @@ export async function PUT(
     const existing = await prisma.recommendation.findUnique({ where: { id } });
     if (!existing) return notFoundResponse();
 
+    // Ownership check: only the creator can update (recommendations without an owner are public)
+    if (existing.userId !== null && existing.userId !== userId) {
+      return unauthorizedResponse();
+    }
+
     const body = await request.json();
     const parsed = RecommendationUpdateSchema.safeParse(body);
     if (!parsed.success) {
@@ -92,6 +97,10 @@ export async function DELETE(
 
     const existing = await prisma.recommendation.findUnique({ where: { id } });
     if (!existing) return notFoundResponse();
+
+    if (existing.userId !== null && existing.userId !== userId) {
+      return unauthorizedResponse();
+    }
 
     await prisma.recommendation.delete({ where: { id } });
 

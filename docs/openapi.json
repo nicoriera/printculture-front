@@ -55,8 +55,16 @@
           },
           "password": {
             "type": "string",
-            "minLength": 6,
-            "description": "Mot de passe en clair (min. 6 caractères)"
+            "minLength": 8,
+            "allOf": [
+              {
+                "pattern": "[A-Z]"
+              },
+              {
+                "pattern": "[0-9]"
+              }
+            ],
+            "description": "Mot de passe (min. 8 caractères, 1 majuscule, 1 chiffre)"
           }
         },
         "required": [

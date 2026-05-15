@@ -4,9 +4,14 @@ import { createToken } from "@/lib/auth";
 import { hashPassword } from "@/lib/password";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { RegisterSchema } from "@/lib/schemas";
+import { rateLimit } from "@/lib/ratelimit";
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+    const { allowed } = rateLimit(`register:${ip}`, 5, 60 * 60 * 1000);
+    if (!allowed) return errorResponse("Trop de tentatives. Réessayez dans 1 heure.", 429);
+
     const body = await request.json();
     const parsed = RegisterSchema.safeParse(body);
     if (!parsed.success) {

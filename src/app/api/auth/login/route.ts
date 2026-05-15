@@ -4,9 +4,14 @@ import { createToken } from "@/lib/auth";
 import { verifyPassword } from "@/lib/password";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { LoginSchema } from "@/lib/schemas";
+import { rateLimit } from "@/lib/ratelimit";
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+    const { allowed } = rateLimit(`login:${ip}`, 10, 15 * 60 * 1000);
+    if (!allowed) return errorResponse("Trop de tentatives. Réessayez dans 15 minutes.", 429);
+
     const body = await request.json();
     const parsed = LoginSchema.safeParse(body);
     if (!parsed.success) {

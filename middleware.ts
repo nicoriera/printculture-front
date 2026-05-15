@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getTokenFromCookie } from "@/lib/auth";
+import { verifyToken, getTokenFromCookie } from "@/lib/auth";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isProtectedRoute = ["/recommendations"].some((route) =>
@@ -10,9 +10,11 @@ export function middleware(request: NextRequest) {
 
   if (isProtectedRoute) {
     const token = getTokenFromCookie(request.headers.get("cookie"));
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+    if (!token) return NextResponse.redirect(new URL("/login", request.url));
+
+    // Verify JWT validity and expiry — jose is Edge Runtime compatible
+    const payload = await verifyToken(token);
+    if (!payload) return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
