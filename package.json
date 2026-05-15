@@ -10,6 +10,9 @@
   "pnpm": {
     "onlyBuiltDependencies": ["esbuild"]
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -26,9 +29,6 @@
     "local:stop": "supabase stop",
     "local:reset": "bash scripts/local-reset.sh",
     "local:studio": "supabase studio"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.17.1",
