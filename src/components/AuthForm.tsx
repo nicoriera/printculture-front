@@ -46,13 +46,23 @@ export default function AuthForm({ mode }: AuthFormProps) {
       setError("Veuillez entrer une adresse email valide.");
       return;
     }
-    if (password.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères.");
+    if (password.length < 8) {
+      setError("Le mot de passe doit contenir au moins 8 caractères.");
       return;
     }
-    if (mode === "register" && password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas.");
-      return;
+    if (mode === "register") {
+      if (!/[A-Z]/.test(password)) {
+        setError("Le mot de passe doit contenir au moins une majuscule.");
+        return;
+      }
+      if (!/[0-9]/.test(password)) {
+        setError("Le mot de passe doit contenir au moins un chiffre.");
+        return;
+      }
+      if (password !== confirmPassword) {
+        setError("Les mots de passe ne correspondent pas.");
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -72,6 +82,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
   return (
     <section className="bg-surface w-dvw h-dvh flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
+        {/* Logo */}
+        <Link href="/" className="block font-serif text-xl text-ink mb-10 hover:text-muted transition-colors">
+          Printculture
+        </Link>
+
         <div className="mb-10">
           <h1 className="font-serif text-4xl text-ink mb-2">{cfg.title}</h1>
           <p className="text-muted text-sm">{cfg.subtitle}</p>
@@ -89,6 +104,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
               placeholder="votre@email.com"
+              autoFocus
               required
             />
           </div>
@@ -106,6 +122,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
               className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
               required
             />
+            {mode === "register" && (
+              <p className="text-xs text-subtle mt-2">
+                8 caractères minimum, une majuscule et un chiffre
+              </p>
+            )}
           </div>
 
           {mode === "register" && (
@@ -125,12 +146,20 @@ export default function AuthForm({ mode }: AuthFormProps) {
             </div>
           )}
 
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && (
+            <p className="text-sm text-red-500 bg-red-50 rounded-xl px-4 py-2.5">{error}</p>
+          )}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-ink text-surface rounded-full py-3 text-sm tracking-wide hover:bg-ink-soft transition-colors disabled:opacity-50 mt-2">
+            className="w-full bg-ink text-surface rounded-full py-3 text-sm tracking-wide hover:bg-ink-soft transition-colors disabled:opacity-50 mt-2 flex items-center justify-center gap-2">
+            {isLoading && (
+              <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+              </svg>
+            )}
             {isLoading ? cfg.loadingLabel : cfg.submitLabel}
           </button>
 

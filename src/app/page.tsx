@@ -16,14 +16,14 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <Link
-            href="/recommendations"
+            href="/register"
             className="bg-ink text-surface px-8 py-3 rounded-full text-sm tracking-wide hover:bg-ink-soft transition-colors">
-            Découvrir
+            Commencer
           </Link>
           <Link
-            href="/register"
+            href="/login"
             className="border border-ink/20 text-ink px-8 py-3 rounded-full text-sm tracking-wide hover:border-ink/40 transition-colors">
-            Rejoindre
+            Se connecter
           </Link>
         </div>
       </section>
