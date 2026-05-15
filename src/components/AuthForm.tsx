@@ -10,20 +10,20 @@ interface AuthFormProps {
 
 const CONFIG = {
   login: {
-    accent: "blue",
-    title: "Connectez-vous à votre compte",
+    title: "Bon retour",
+    subtitle: "Connectez-vous pour retrouver vos découvertes",
     submitLabel: "Se connecter",
     loadingLabel: "Connexion...",
-    linkText: "Vous n'avez pas encore de compte ?",
-    linkLabel: "S'inscrire",
+    linkText: "Pas encore de compte ?",
+    linkLabel: "Rejoindre",
     linkHref: "/register",
   },
   register: {
-    accent: "green",
-    title: "Créez votre compte",
-    submitLabel: "S'inscrire",
-    loadingLabel: "Création du compte...",
-    linkText: "Vous avez déjà un compte ?",
+    title: "Rejoindre",
+    subtitle: "Créez votre espace de partage culturel",
+    submitLabel: "Créer mon compte",
+    loadingLabel: "Création...",
+    linkText: "Déjà un compte ?",
     linkLabel: "Se connecter",
     linkHref: "/login",
   },
@@ -69,77 +69,78 @@ export default function AuthForm({ mode }: AuthFormProps) {
     }
   };
 
-  const a = cfg.accent;
-
   return (
-    <section className={`bg-${a}-50 w-dvw h-dvh flex`}>
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className={`w-full bg-white rounded-2xl shadow-sm border border-${a}-200/30 md:mt-0 sm:max-w-md xl:p-0`}>
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className={`text-xl font-bold leading-tight tracking-tight text-${a}-600 md:text-2xl`}>
-              {cfg.title}
-            </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-neutral-700">
-                  Votre email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`bg-neutral-50 border border-neutral-300 text-neutral-900 sm:text-sm rounded-lg focus:ring-${a}-500 focus:border-${a}-500 block w-full p-2.5 transition-all duration-200`}
-                  placeholder="name@company.com"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-neutral-700">
-                  Mot de passe
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className={`bg-neutral-50 border border-neutral-300 text-neutral-900 sm:text-sm rounded-lg focus:ring-${a}-500 focus:border-${a}-500 block w-full p-2.5 transition-all duration-200`}
-                  required
-                />
-              </div>
-              {mode === "register" && (
-                <div>
-                  <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-neutral-700">
-                    Confirmer le mot de passe
-                  </label>
-                  <input
-                    type="password"
-                    id="confirm-password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className={`bg-neutral-50 border border-neutral-300 text-neutral-900 sm:text-sm rounded-lg focus:ring-${a}-500 focus:border-${a}-500 block w-full p-2.5 transition-all duration-200`}
-                    required
-                  />
-                </div>
-              )}
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <button
-                type="submit"
-                disabled={isLoading}
-                className={`w-full text-white bg-${a}-500 hover:bg-${a}-600 focus:ring-4 focus:outline-none focus:ring-${a}-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50 transition-all duration-200`}>
-                {isLoading ? cfg.loadingLabel : cfg.submitLabel}
-              </button>
-              <p className="text-sm font-light text-neutral-500">
-                {cfg.linkText}{" "}
-                <Link href={cfg.linkHref} className={`font-medium text-${a}-600 hover:underline transition-colors duration-200`}>
-                  {cfg.linkLabel}
-                </Link>
-              </p>
-            </form>
-          </div>
+    <section className="bg-surface w-dvw h-dvh flex items-center justify-center px-6">
+      <div className="w-full max-w-sm">
+        <div className="mb-10">
+          <h1 className="font-serif text-4xl text-ink mb-2">{cfg.title}</h1>
+          <p className="text-muted text-sm">{cfg.subtitle}</p>
         </div>
+
+        <form className="space-y-5" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email" className="block mb-2 text-xs uppercase tracking-widest text-subtle">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+              placeholder="votre@email.com"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block mb-2 text-xs uppercase tracking-widest text-subtle">
+              Mot de passe
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+              required
+            />
+          </div>
+
+          {mode === "register" && (
+            <div>
+              <label htmlFor="confirm-password" className="block mb-2 text-xs uppercase tracking-widest text-subtle">
+                Confirmer
+              </label>
+              <input
+                type="password"
+                id="confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+                required
+              />
+            </div>
+          )}
+
+          {error && <p className="text-sm text-red-500">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-ink text-surface rounded-full py-3 text-sm tracking-wide hover:bg-ink-soft transition-colors disabled:opacity-50 mt-2">
+            {isLoading ? cfg.loadingLabel : cfg.submitLabel}
+          </button>
+
+          <p className="text-center text-sm text-muted pt-2">
+            {cfg.linkText}{" "}
+            <Link href={cfg.linkHref} className="text-ink underline underline-offset-2 hover:text-ink-soft transition-colors">
+              {cfg.linkLabel}
+            </Link>
+          </p>
+        </form>
       </div>
     </section>
   );

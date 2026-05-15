@@ -11,12 +11,7 @@ interface RecommendationModalProps {
   isMobile: boolean;
 }
 
-export default function RecommendationModal({
-  isOpen,
-  onClose,
-  onSubmit,
-  isMobile,
-}: RecommendationModalProps) {
+export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobile }: RecommendationModalProps) {
   const emptyForm: CreateRecommendationData = {
     title: "",
     description: "",
@@ -34,7 +29,6 @@ export default function RecommendationModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
       await onSubmit(formData);
       setFormData(emptyForm);
@@ -50,15 +44,11 @@ export default function RecommendationModal({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const fd = new FormData();
+    fd.append("file", file);
 
     try {
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
+      const response = await fetch("/api/upload", { method: "POST", body: fd });
       const data = await response.json();
       if (response.ok) {
         setFormData((prev) => ({
@@ -74,47 +64,37 @@ export default function RecommendationModal({
 
   if (!isOpen) return null;
 
+  const inputClass = "w-full bg-white border border-ink/10 rounded-xl px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-rose transition-colors";
+  const labelClass = "block mb-1.5 text-xs uppercase tracking-widest text-subtle";
+
   return (
     <div
-      className={`fixed inset-x-0 z-50 bg-white shadow-lg transition-all duration-300 ease-in-out ${
+      className={`fixed inset-x-0 z-50 transition-all duration-300 ease-in-out ${
         isMobile
-          ? "bottom-0 h-2/3 rounded-t-3xl"
-          : "inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+          ? "bottom-0 bg-surface shadow-lg"
+          : "inset-0 bg-ink/40 backdrop-blur-sm flex items-center justify-center"
       }`}>
       <div
         className={`${
           isMobile
-            ? "h-full overflow-y-auto p-6"
-            : "bg-white rounded-2xl p-6 w-full max-w-md border border-neutral-200/30"
+            ? "h-[75vh] rounded-t-3xl overflow-y-auto p-6 bg-surface"
+            : "bg-surface rounded-2xl p-6 w-full max-w-md shadow-xl"
         }`}>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-neutral-700">
-              Ajouter une recommandation
-            </h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <div className="flex justify-between items-center">
+            <h2 className="font-serif text-xl text-ink">Ajouter</h2>
             <button
               onClick={onClose}
               type="button"
-              className="text-neutral-500 hover:text-neutral-700 transition-colors duration-200">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+              className="text-subtle hover:text-ink transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="category" className="font-medium text-neutral-700">
-              Catégorie
-            </label>
+          <div>
+            <label className={labelClass}>Catégorie</label>
             <select
               value={formData.category ?? ""}
               onChange={(e) =>
@@ -123,112 +103,85 @@ export default function RecommendationModal({
                   category: (e.target.value as RecommendationCategory) || undefined,
                 }))
               }
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              className={inputClass}
               required>
-              <option value="">Sélectionner une catégorie</option>
+              <option value="">Sélectionner</option>
               {RECOMMENDATION_CATEGORIES.map((cat) => (
                 <option key={cat} value={cat}>{cat}</option>
               ))}
             </select>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="title" className="font-medium text-neutral-700">
-              Titre
-            </label>
+          <div>
+            <label className={labelClass}>Titre</label>
             <input
               type="text"
               value={formData.title}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, title: e.target.value }))
-              }
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+              className={inputClass}
               required
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="description"
-              className="font-medium text-neutral-700">
-              Description
-            </label>
+          <div>
+            <label className={labelClass}>Description</label>
             <textarea
               value={formData.description}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  description: e.target.value,
-                }))
-              }
+              onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
               rows={3}
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              className={`${inputClass} resize-none`}
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="tag" className="font-medium text-neutral-700">
-              Tag
-            </label>
+          <div>
+            <label className={labelClass}>Tag</label>
             <input
               type="text"
               value={formData.tag}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, tag: e.target.value }))
-              }
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              onChange={(e) => setFormData((prev) => ({ ...prev, tag: e.target.value }))}
+              className={inputClass}
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="link" className="font-medium text-neutral-700">
-              Lien
-            </label>
+          <div>
+            <label className={labelClass}>Lien</label>
             <input
               type="url"
               value={formData.link}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, link: e.target.value }))
-              }
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              onChange={(e) => setFormData((prev) => ({ ...prev, link: e.target.value }))}
+              className={inputClass}
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="videoLink" className="font-medium text-neutral-700">
-              Lien vidéo
-            </label>
+          <div>
+            <label className={labelClass}>Lien vidéo</label>
             <input
               type="url"
               value={formData.videoLink}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, videoLink: e.target.value }))
-              }
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
-              placeholder="https://www.youtube.com/embed/your-video-id"
+              onChange={(e) => setFormData((prev) => ({ ...prev, videoLink: e.target.value }))}
+              className={inputClass}
+              placeholder="https://www.youtube.com/embed/..."
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="file" className="font-medium text-neutral-700">
-              Fichier
-            </label>
+          <div>
+            <label className={labelClass}>Fichier</label>
             <input
               ref={fileInputRef}
               type="file"
               onChange={handleFileUpload}
-              className="border border-neutral-300 rounded-lg px-3 py-2 bg-neutral-50 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              className={inputClass}
               accept="image/*,application/pdf,.doc,.docx,.txt"
             />
             {formData.fileName && (
-              <p className="text-sm text-green-600">✓ {formData.fileName}</p>
+              <p className="text-xs text-muted mt-1">✓ {formData.fileName}</p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-orange-500 text-white rounded-lg py-3 px-4 hover:bg-orange-600 transition duration-300 mt-4 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 disabled:opacity-50">
+            className="w-full bg-ink text-surface rounded-full py-3 text-sm tracking-wide hover:bg-ink-soft transition-colors disabled:opacity-50 mt-1">
             {isLoading ? "Ajout en cours..." : "Ajouter la recommandation"}
           </button>
         </form>
