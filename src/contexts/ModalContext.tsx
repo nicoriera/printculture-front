@@ -16,8 +16,14 @@ const ModalContext = createContext<ModalContextValue>({
   lastCreated: 0,
 });
 
+/**
+ * Returns modal controls from the nearest `ModalProvider`.
+ * @returns `{ open, close, lastCreated }` — `lastCreated` is a `Date.now()` timestamp
+ * updated after each successful submission, useful to trigger re-fetches.
+ */
 export const useModal = () => useContext(ModalContext);
 
+/** Provides the global recommendation-creation modal to the component tree. */
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);

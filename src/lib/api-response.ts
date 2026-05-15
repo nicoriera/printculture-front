@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+/** Standard envelope returned by every API route. */
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
@@ -7,6 +8,7 @@ export interface ApiResponse<T = unknown> {
   error?: string;
 }
 
+/** 200 OK with typed `data` payload. */
 export function successResponse<T>(
   data: T,
   message?: string
@@ -18,6 +20,7 @@ export function successResponse<T>(
   });
 }
 
+/** 400 (or custom status) with an error message. */
 export function errorResponse(
   message: string,
   status: number = 400
@@ -31,6 +34,7 @@ export function errorResponse(
   );
 }
 
+/** 401 Unauthorized — missing or invalid auth token. */
 export function unauthorizedResponse(): NextResponse<ApiResponse> {
   return NextResponse.json(
     {
@@ -41,6 +45,7 @@ export function unauthorizedResponse(): NextResponse<ApiResponse> {
   );
 }
 
+/** 404 Not Found. */
 export function notFoundResponse(): NextResponse<ApiResponse> {
   return NextResponse.json(
     {

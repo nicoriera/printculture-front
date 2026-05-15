@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 
 if (!process.env.JWT_SECRET) {
@@ -6,17 +5,7 @@ if (!process.env.JWT_SECRET) {
 }
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function hashPassword(password: string): Promise<string> {
-  return await bcrypt.hash(password, 10);
-}
-
-export async function verifyPassword(
-  password: string,
-  hashedPassword: string
-): Promise<boolean> {
-  return await bcrypt.compare(password, hashedPassword);
-}
-
+/** Signs a JWT containing `userId` and `email`, valid for 7 days. */
 export async function createToken(payload: {
   userId: number;
   email: string;
@@ -28,6 +17,11 @@ export async function createToken(payload: {
     .sign(JWT_SECRET);
 }
 
+/**
+ * Verifies a JWT and returns its payload.
+ * Returns `null` instead of throwing when the token is invalid or expired —
+ * callers should treat `null` as unauthenticated.
+ */
 export async function verifyToken(
   token: string
 ): Promise<{ userId: number; email: string } | null> {
@@ -39,6 +33,7 @@ export async function verifyToken(
   }
 }
 
+/** Extracts the `auth-token` value from a raw `Cookie` header string. */
 export function getTokenFromCookie(cookieHeader: string | null): string | null {
   if (!cookieHeader) return null;
 

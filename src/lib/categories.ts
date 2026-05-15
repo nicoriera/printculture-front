@@ -1,5 +1,6 @@
 import { RecommendationCategory } from "@/lib/schemas";
 
+/** Tailwind background class for each category badge. */
 export const CATEGORY_COLORS: Record<RecommendationCategory, string> = {
   Movie: "bg-category-movie",
   Book: "bg-category-book",
@@ -7,6 +8,7 @@ export const CATEGORY_COLORS: Record<RecommendationCategory, string> = {
   Podcast: "bg-category-podcast",
 };
 
+/** French display label for each category. */
 export const CATEGORY_LABELS: Record<RecommendationCategory, string> = {
   Movie: "Films",
   Book: "Livres",
@@ -21,6 +23,7 @@ export const CATEGORY_HEADING_COLORS: Record<RecommendationCategory, string> = {
   Podcast: "text-ink",
 };
 
+/** Returns the Tailwind background class for a category string, defaulting to `bg-surface`. */
 export function getCategoryColor(category?: string | null): string {
   return CATEGORY_COLORS[category as RecommendationCategory] ?? "bg-surface";
 }

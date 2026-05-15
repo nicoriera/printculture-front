@@ -2,6 +2,7 @@ import type { RecommendationCategory, RecommendationCreateInput, RecommendationU
 
 export type { RecommendationCategory };
 
+/** Recommendation record as returned by the API (mirrors the Prisma model). */
 export interface IRecommendation {
   id: number;
   title: string;
@@ -10,6 +11,7 @@ export interface IRecommendation {
   link?: string | null;
   tag?: string | null;
   videoLink?: string | null;
+  /** Supabase Storage public URL. */
   fileUrl?: string | null;
   fileName?: string | null;
   userId?: number | null;
@@ -17,5 +19,8 @@ export interface IRecommendation {
   updatedAt: Date;
 }
 
+/** Body for POST /api/recommendations — inferred from `RecommendationCreateSchema`. */
 export type CreateRecommendationData = RecommendationCreateInput;
+
+/** Body for PUT /api/recommendations/[id] — all fields optional plus required `id`. */
 export type UpdateRecommendationData = RecommendationUpdateInput & { id: number };

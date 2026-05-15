@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   IRecommendation,
   CreateRecommendationData,
@@ -8,10 +9,16 @@ import {
   RecommendationCategory,
 } from "@/types/recommendation";
 
+/**
+ * Fetches and manages the recommendation list.
+ * Redirects to /login automatically on a 401 (expired/invalid token).
+ * @returns `{ recommendations, isLoading, error, fetchRecommendations, createRecommendation, updateRecommendation, deleteRecommendation, getRecommendationsByCategory }`
+ */
 export function useRecommendations() {
   const [recommendations, setRecommendations] = useState<IRecommendation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const fetchRecommendations = async () => {
     setIsLoading(true);
@@ -19,6 +26,11 @@ export function useRecommendations() {
     try {
       const response = await fetch("/api/recommendations");
       const data = await response.json();
+
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch recommendations");

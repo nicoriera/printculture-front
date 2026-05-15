@@ -12,6 +12,7 @@ import { IUser, AuthContextType } from "@/types/user";
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
+/** Provides auth state and actions to the component tree. Wrap the app root with this. */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -107,6 +108,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * Returns auth state and actions from the nearest `AuthProvider`.
+ * @returns `{ user, isLoading, login, register, logout }`
+ */
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {

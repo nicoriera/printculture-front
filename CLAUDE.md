@@ -28,7 +28,8 @@ pnpm db:studio    # open Prisma Studio GUI
 | `src/lib/schemas.ts` | Tous les schemas Zod — contrats de données, types inférés, enum des catégories |
 | `src/lib/categories.ts` | Couleurs, labels et utilitaires des catégories |
 | `src/lib/api-response.ts` | Helpers de réponse API (`successResponse`, `errorResponse`, `unauthorizedResponse`, `notFoundResponse`) |
-| `src/lib/auth.ts` | JWT (sign/verify) + bcrypt + extraction cookie |
+| `src/lib/auth.ts` | JWT (sign/verify) + extraction cookie — Edge Runtime safe |
+| `src/lib/password.ts` | bcrypt hash/verify — Node.js only, never imported from middleware |
 
 ### Pattern d'une route API
 

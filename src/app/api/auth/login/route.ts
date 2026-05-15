@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { verifyPassword, createToken } from "@/lib/auth";
+import { createToken } from "@/lib/auth";
+import { verifyPassword } from "@/lib/password";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { LoginSchema } from "@/lib/schemas";
 

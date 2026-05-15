@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="antialiased bg-surface">
+      <body className="antialiased bg-surface" suppressHydrationWarning>
         <AuthWrapper>
           <Navigation />
           <main className="min-h-screen pt-16 lg:pt-20 pb-24 lg:pb-0">
