@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { IRecommendation } from "@/types/recommendation";
-import { CATEGORY_LABELS } from "@/lib/categories";
+import { CATEGORY_LABELS, getCategoryColor } from "@/lib/categories";
 
 interface RecommendationCardProps {
   recommendation: IRecommendation;
@@ -10,10 +11,23 @@ interface RecommendationCardProps {
 }
 
 export default function RecommendationCard({ recommendation, onDelete }: RecommendationCardProps) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleDelete = () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true);
+      setTimeout(() => setConfirmDelete(false), 3000);
+      return;
+    }
+    if (recommendation.id) onDelete(recommendation.id);
+  };
+
+  const categoryBg = getCategoryColor(recommendation.category);
+
   return (
-    <div className="bg-white rounded-2xl p-6 border border-ink/5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+    <div className={`${categoryBg} rounded-2xl p-6 border border-ink/5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300`}>
       <div className="flex justify-between items-start mb-4">
-        <span className="text-xs uppercase tracking-widest text-muted bg-rose-light/60 px-3 py-1 rounded-full">
+        <span className="text-xs uppercase tracking-widest text-muted bg-white/60 px-3 py-1 rounded-full">
           {recommendation.category ? CATEGORY_LABELS[recommendation.category] : "—"}
         </span>
         {recommendation.tag && (
@@ -63,17 +77,33 @@ export default function RecommendationCard({ recommendation, onDelete }: Recomme
         </a>
       )}
 
-      <div className="flex justify-between items-center pt-4 border-t border-ink/5 mt-4">
+      <div className="flex justify-between items-center pt-4 border-t border-ink/10 mt-4">
         <Link
           href={`/recommendations/${recommendation.id}`}
           className="text-sm text-ink underline underline-offset-2 hover:text-muted transition-colors">
           Détails
         </Link>
-        <button
-          onClick={() => recommendation.id && onDelete(recommendation.id)}
-          className="text-xs text-subtle hover:text-red-400 transition-colors">
-          Supprimer
-        </button>
+
+        {confirmDelete ? (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setConfirmDelete(false)}
+              className="text-xs text-subtle hover:text-ink transition-colors">
+              Annuler
+            </button>
+            <button
+              onClick={handleDelete}
+              className="text-xs text-red-500 font-medium hover:text-red-600 transition-colors">
+              Confirmer
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={handleDelete}
+            className="text-xs text-subtle hover:text-red-400 transition-colors">
+            Supprimer
+          </button>
+        )}
       </div>
     </div>
   );

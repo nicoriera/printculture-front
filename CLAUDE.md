@@ -15,7 +15,31 @@ pnpm db:migrate   # apply migrations (dev)
 pnpm db:reset     # reset database
 pnpm db:seed      # populate database from scripts/migrate-data.ts
 pnpm db:studio    # open Prisma Studio GUI
+
+# Local Supabase environment (requires Docker + Supabase CLI)
+pnpm local:start  # start local Supabase containers
+pnpm local:stop   # stop local Supabase containers
+pnpm local:reset  # push schema + seed local DB (reads .env.local)
+pnpm local:studio # open Supabase Studio at localhost:54323
 ```
+
+### Local dev setup (first time)
+
+```bash
+# 1. Start local Supabase containers (Docker required)
+pnpm local:start
+
+# 2. Copy and fill .env.local (paste keys from `supabase status` output)
+cp .env.local.example .env.local
+
+# 3. Push Prisma schema and seed the database
+pnpm local:reset
+
+# 4. Start the Next.js dev server
+pnpm dev
+```
+
+Local ports: API `54321` · DB `54322` · Studio `54323` · Email `54324`
 
 ## Architecture
 
