@@ -7,6 +7,9 @@
     "pnpm": ">=10.0.0"
   },
   "packageManager": "pnpm@10.18.3",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -18,7 +21,14 @@
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
     "type-check": "tsc --noEmit",
-    "docs:generate": "tsx scripts/generate-openapi.ts"
+    "docs:generate": "tsx scripts/generate-openapi.ts",
+    "local:start": "supabase start",
+    "local:stop": "supabase stop",
+    "local:reset": "bash scripts/local-reset.sh",
+    "local:studio": "supabase studio"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.17.1",
