@@ -1,7 +1,7 @@
 "use client";
 
 import { IRecommendation, RecommendationCategory } from "@/types/recommendation";
-import { CATEGORY_LABELS, CATEGORY_HEADING_COLORS } from "@/lib/categories";
+import { CATEGORY_LABELS } from "@/lib/categories";
 import RecommendationCard from "@/components/RecommendationCard";
 
 interface CategorySectionProps {
@@ -14,13 +14,16 @@ export default function CategorySection({ category, items, onDelete }: CategoryS
   if (items.length === 0) return null;
 
   return (
-    <div className="mt-8">
-      <h2 className={`text-xl font-semibold mb-4 ${CATEGORY_HEADING_COLORS[category]}`}>
-        {CATEGORY_LABELS[category]}
-      </h2>
+    <div className="mt-10">
+      <div className="mb-6">
+        <h2 className="font-serif text-2xl text-ink">
+          {CATEGORY_LABELS[category]}
+        </h2>
+        <div className="w-8 h-px bg-rose mt-2" />
+      </div>
       <div className="inline-flex overflow-x-auto w-full gap-4 pb-4">
         {items.map((item) => (
-          <div key={item.id} className="flex-shrink-0 w-80">
+          <div key={item.id} className="flex-shrink-0 w-72">
             <RecommendationCard recommendation={item} onDelete={onDelete} />
           </div>
         ))}

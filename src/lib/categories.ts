@@ -8,19 +8,19 @@ export const CATEGORY_COLORS: Record<RecommendationCategory, string> = {
 };
 
 export const CATEGORY_LABELS: Record<RecommendationCategory, string> = {
-  Movie: "🎬 Films",
-  Book: "📚 Livres",
-  Music: "🎵 Musique",
-  Podcast: "🎧 Podcasts",
+  Movie: "Films",
+  Book: "Livres",
+  Music: "Musique",
+  Podcast: "Podcasts",
 };
 
 export const CATEGORY_HEADING_COLORS: Record<RecommendationCategory, string> = {
-  Movie: "text-orange-600",
-  Book: "text-green-600",
-  Music: "text-red-600",
-  Podcast: "text-blue-600",
+  Movie: "text-ink",
+  Book: "text-ink",
+  Music: "text-ink",
+  Podcast: "text-ink",
 };
 
 export function getCategoryColor(category?: string | null): string {
-  return CATEGORY_COLORS[category as RecommendationCategory] ?? "bg-secondary-100";
+  return CATEGORY_COLORS[category as RecommendationCategory] ?? "bg-surface";
 }

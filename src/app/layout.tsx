@@ -15,10 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="antialiased bg-background">
+      <body className="antialiased bg-surface">
         <AuthWrapper>
           <Navigation />
-          <main className="min-h-screen pt-20">{children}</main>
+          <main className="min-h-screen pt-16 lg:pt-20 pb-24 lg:pb-0">
+            {children}
+          </main>
         </AuthWrapper>
       </body>
     </html>
