@@ -73,6 +73,13 @@ export async function PUT(
         ...(data.videoLink !== undefined && { videoLink: data.videoLink || null }),
         ...(data.fileUrl !== undefined && { fileUrl: data.fileUrl }),
         ...(data.fileName !== undefined && { fileName: data.fileName }),
+        ...(data.author !== undefined && { author: data.author }),
+        ...(data.year !== undefined && { year: data.year }),
+        ...(data.publisher !== undefined && { publisher: data.publisher }),
+        ...(data.language !== undefined && { language: data.language }),
+        ...(data.imageUrl !== undefined && { imageUrl: data.imageUrl }),
+        ...(data.tagline !== undefined && { tagline: data.tagline }),
+        ...(data.opinion !== undefined && { opinion: data.opinion }),
       },
     });
 

@@ -14,9 +14,27 @@ export interface IRecommendation {
   /** Supabase Storage public URL. */
   fileUrl?: string | null;
   fileName?: string | null;
+  // Champs éditoriaux (maquette CULTURHUB — écran de détail)
+  author?: string | null;
+  year?: string | null;
+  publisher?: string | null;
+  language?: string | null;
+  imageUrl?: string | null;
+  tagline?: string | null;
+  opinion?: string | null;
   userId?: number | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+/** Chat message as returned by the API (mirrors the Prisma `Message` model). */
+export interface IMessage {
+  id: number;
+  content: string;
+  userId: number;
+  recommendationId?: number | null;
+  recommendation?: IRecommendation | null;
+  createdAt: Date;
 }
 
 /** Body for POST /api/recommendations — inferred from `RecommendationCreateSchema`. */

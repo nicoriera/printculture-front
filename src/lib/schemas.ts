@@ -22,7 +22,7 @@ export const RegisterSchema = z.object({
 // Recommendations
 
 /** Allowed recommendation categories. */
-export const RECOMMENDATION_CATEGORIES = ["Movie", "Book", "Music", "Podcast"] as const;
+export const RECOMMENDATION_CATEGORIES = ["Movie", "Book", "Music", "Podcast", "Exhibition"] as const;
 
 /** Union type of all valid recommendation categories. */
 export type RecommendationCategory = (typeof RECOMMENDATION_CATEGORIES)[number];
@@ -50,18 +50,35 @@ const safeUrl = (errorMessage: string) =>
 export const RecommendationCreateSchema = z.object({
   title: z.string().min(1, "Le titre est requis").max(255).describe("Titre de la recommandation"),
   description: z.string().max(5000).optional().describe("Description ou critique libre"),
-  category: z.enum(RECOMMENDATION_CATEGORIES).optional().describe("Catégorie : Movie | Book | Music | Podcast"),
+  category: z.enum(RECOMMENDATION_CATEGORIES).optional().describe("Catégorie : Movie | Book | Music | Podcast | Exhibition"),
   link: safeUrl("URL invalide").optional().or(z.literal("")).describe("Lien externe (site, article…)"),
   tag: z.string().max(100).optional().describe("Tag ou mot-clé libre"),
   videoLink: safeUrl("URL de vidéo invalide").optional().or(z.literal("")).describe("URL d'embed vidéo (YouTube, Vimeo…)"),
   fileUrl: z.string().optional().describe("URL Supabase Storage du fichier attaché"),
   fileName: z.string().optional().describe("Nom original du fichier attaché"),
+  // Champs éditoriaux (maquette CULTURHUB — écran de détail)
+  author: z.string().max(255).optional().describe("Auteur, réalisateur, artiste…"),
+  year: z.string().max(20).optional().describe("Année de parution / sortie"),
+  publisher: z.string().max(255).optional().describe("Éditeur, label, studio…"),
+  language: z.string().max(60).optional().describe("Langue"),
+  imageUrl: safeUrl("URL d'image invalide").optional().or(z.literal("")).describe("URL de la vignette / couverture"),
+  tagline: z.string().max(300).optional().describe("Accroche courte sous le titre"),
+  opinion: z.string().max(2000).optional().describe("« Notre avis » — verdict partagé"),
 });
 
 /** Zod schema for partial updates — all fields from create are optional. */
 export const RecommendationUpdateSchema = RecommendationCreateSchema.partial();
 
+// Messages (chat « Échanges »)
+
+/** Zod schema for creating a chat message. Source of truth for POST /api/messages. */
+export const MessageCreateSchema = z.object({
+  content: z.string().min(1, "Le message est requis").max(2000).describe("Contenu du message"),
+  recommendationId: z.number().int().positive().optional().describe("Reco partagée dans le fil"),
+});
+
 export type LoginInput = z.infer<typeof LoginSchema>;
 export type RegisterInput = z.infer<typeof RegisterSchema>;
 export type RecommendationCreateInput = z.infer<typeof RecommendationCreateSchema>;
 export type RecommendationUpdateInput = z.infer<typeof RecommendationUpdateSchema>;
+export type MessageCreateInput = z.infer<typeof MessageCreateSchema>;

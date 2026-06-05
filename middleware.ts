@@ -4,8 +4,8 @@ import { verifyToken, getTokenFromCookie } from "@/lib/auth";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const isProtectedRoute = ["/recommendations"].some((route) =>
-    pathname.startsWith(route)
+  const isProtectedRoute = ["/recommendations", "/echanges", "/recherche", "/profil"].some(
+    (route) => pathname.startsWith(route)
   );
 
   if (isProtectedRoute) {

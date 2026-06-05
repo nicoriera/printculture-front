@@ -23,22 +23,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "cypress",
-    "cypress.config.ts",
-    "vite.config.ts",
-    "vitest.config.ts",
-    "src/api",
-    "src/composable",
-    "src/helpers",
-    "src/locales",
-    "src/main.ts",
-    "src/router",
-    "src/services",
-    "src/stores",
-    "src/views",
-    "src/App.vue",
-    "src/components/__tests__"
-  ]
+  "exclude": ["node_modules", "cypress", "cypress.config.ts"]
 }
