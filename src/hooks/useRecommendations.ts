@@ -6,13 +6,12 @@ import {
   IRecommendation,
   CreateRecommendationData,
   UpdateRecommendationData,
-  RecommendationCategory,
 } from "@/types/recommendation";
 
 /**
  * Fetches and manages the recommendation list.
  * Redirects to /login automatically on a 401 (expired/invalid token).
- * @returns `{ recommendations, isLoading, error, fetchRecommendations, createRecommendation, updateRecommendation, deleteRecommendation, getRecommendationsByCategory }`
+ * @returns `{ recommendations, isLoading, error, fetchRecommendations, createRecommendation, updateRecommendation, deleteRecommendation }`
  */
 export function useRecommendations() {
   const [recommendations, setRecommendations] = useState<IRecommendation[]>([]);
@@ -137,10 +136,6 @@ export function useRecommendations() {
     }
   };
 
-  const getRecommendationsByCategory = (category: RecommendationCategory) => {
-    return recommendations.filter((rec) => rec.category === category);
-  };
-
   useEffect(() => {
     fetchRecommendations();
   }, []);
@@ -153,6 +148,5 @@ export function useRecommendations() {
     createRecommendation,
     updateRecommendation,
     deleteRecommendation,
-    getRecommendationsByCategory,
   };
 }

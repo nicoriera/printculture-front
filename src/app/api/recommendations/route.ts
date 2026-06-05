@@ -46,6 +46,14 @@ export async function POST(request: NextRequest) {
         videoLink: data.videoLink || null,
         fileUrl: data.fileUrl,
         fileName: data.fileName,
+        author: data.author,
+        year: data.year,
+        publisher: data.publisher,
+        language: data.language,
+        imageUrl: data.imageUrl,
+        tagline: data.tagline,
+        opinion: data.opinion,
+        userId: payload.userId,
       },
     });
 

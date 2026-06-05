@@ -49,6 +49,7 @@
   --category-book: #EAF0ED;
   --category-music: #EDE8F0;
   --category-podcast: #E8EEF5;
+  --category-exhibition: #F3ECE6;
 
   /* Neutrals kept for utility classes */
   --neutral-50: #fafafa;
@@ -81,6 +82,7 @@
   --color-category-book: var(--category-book);
   --color-category-music: var(--category-music);
   --color-category-podcast: var(--category-podcast);
+  --color-category-exhibition: var(--category-exhibition);
 
   /* Neutrals */
   --color-neutral-50: var(--neutral-50);

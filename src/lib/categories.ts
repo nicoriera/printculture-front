@@ -6,6 +6,7 @@ export const CATEGORY_COLORS: Record<RecommendationCategory, string> = {
   Book: "bg-category-book",
   Music: "bg-category-music",
   Podcast: "bg-category-podcast",
+  Exhibition: "bg-category-exhibition",
 };
 
 /** French display label for each category. */
@@ -14,13 +15,7 @@ export const CATEGORY_LABELS: Record<RecommendationCategory, string> = {
   Book: "Livres",
   Music: "Musique",
   Podcast: "Podcasts",
-};
-
-export const CATEGORY_HEADING_COLORS: Record<RecommendationCategory, string> = {
-  Movie: "text-ink",
-  Book: "text-ink",
-  Music: "text-ink",
-  Podcast: "text-ink",
+  Exhibition: "Expositions",
 };
 
 /** Returns the Tailwind background class for a category string, defaulting to `bg-surface`. */

@@ -38,6 +38,13 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
     videoLink: "",
     fileName: "",
     fileUrl: "",
+    author: "",
+    year: "",
+    publisher: "",
+    language: "",
+    imageUrl: "",
+    tagline: "",
+    opinion: "",
   };
   const [formData, setFormData] = useState<CreateRecommendationData>(emptyForm);
   const [isLoading, setIsLoading] = useState(false);
@@ -153,14 +160,90 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
             />
           </div>
 
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className={labelClass}>Auteur</label>
+              <input
+                type="text"
+                value={formData.author}
+                onChange={(e) => setFormData((prev) => ({ ...prev, author: e.target.value }))}
+                placeholder="Ex : Ahmet Altan"
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Année</label>
+              <input
+                type="text"
+                value={formData.year}
+                onChange={(e) => setFormData((prev) => ({ ...prev, year: e.target.value }))}
+                placeholder="Ex : 2021"
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Éditeur</label>
+              <input
+                type="text"
+                value={formData.publisher}
+                onChange={(e) => setFormData((prev) => ({ ...prev, publisher: e.target.value }))}
+                placeholder="Ex : Actes Sud"
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Langue</label>
+              <input
+                type="text"
+                value={formData.language}
+                onChange={(e) => setFormData((prev) => ({ ...prev, language: e.target.value }))}
+                placeholder="Ex : Français"
+                className={inputClass}
+              />
+            </div>
+          </div>
+
           <div>
-            <label className={labelClass}>Description</label>
+            <label className={labelClass}>Accroche</label>
+            <input
+              type="text"
+              value={formData.tagline}
+              onChange={(e) => setFormData((prev) => ({ ...prev, tagline: e.target.value }))}
+              placeholder="Un roman poignant sur l'exil…"
+              className={inputClass}
+            />
+          </div>
+
+          <div>
+            <label className={labelClass}>Image (URL)</label>
+            <input
+              type="url"
+              value={formData.imageUrl}
+              onChange={(e) => setFormData((prev) => ({ ...prev, imageUrl: e.target.value }))}
+              placeholder="https://… (couverture / affiche)"
+              className={inputClass}
+            />
+          </div>
+
+          <div>
+            <label className={labelClass}>À propos</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
               rows={3}
-              placeholder="Pourquoi cette recommandation vous a marqué ?"
+              placeholder="Le résumé, le contexte…"
               className={`${inputClass} resize-none`}
+            />
+          </div>
+
+          <div>
+            <label className={labelClass}>Notre avis</label>
+            <input
+              type="text"
+              value={formData.opinion}
+              onChange={(e) => setFormData((prev) => ({ ...prev, opinion: e.target.value }))}
+              placeholder="Coup de cœur partagé ❤"
+              className={inputClass}
             />
           </div>
 
