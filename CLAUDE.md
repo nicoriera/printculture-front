@@ -10,9 +10,10 @@ L'espace est **partagé globalement** : toutes les recommandations et le fil de 
 sont visibles par tous les comptes de l'instance (« à deux » = l'instance). La marque
 affichée est **CULTURHUB** (le package reste `printculture-next`).
 
-> ⚠️ **L'app est dans le sous-dossier `printculture-next/`.** Toute commande `pnpm` doit s'y
-> exécuter : `cd printculture-next` ou `pnpm -C printculture-next <script>`. La lancer depuis
-> le parent échoue avec `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND`.
+> ⚠️ **La racine du projet est ce dossier `printculture-next/`** (git, `package.json`,
+> `.claude/`, CLAUDE.md y vivent). Ouvre/lance tout d'ici. Un dossier parent
+> `printculture/` l'enveloppe encore mais ne contient plus rien d'utile ; lancer `pnpm`
+> depuis ce parent échoue avec `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND`.
 
 ### Écrans & routes
 | Route | Écran | Notes |
@@ -173,11 +174,12 @@ pnpm db:generate   # regénérer le client Prisma
 pnpm db:migrate    # appliquer la migration en dev
 ```
 
-**Config Claude Code** (à la racine du repo, `../.claude/` depuis ce dossier) :
+**Config Claude Code** — `.claude/` est à la racine du projet (ce dossier), versionnée avec le
+code (`settings.local.json` est git-ignoré car local à la machine) :
 - Permissions + hook Stop : `.claude/settings.local.json`
 - **Lancement des serveurs** : `.claude/launch.json` (servers `next-dev` :3000, `supabase` :54321,
-  `prisma-studio` :5555). Utiliser l'outil `preview_start <name>` plutôt que Bash. Les configs
-  ciblent le sous-dossier via `pnpm -C printculture-next …`.
+  `prisma-studio` :5555, commandes `pnpm` relatives à la racine). Utiliser l'outil
+  `preview_start <name>` plutôt que Bash.
 - **Agents** (`.claude/agents/`) : `culturhub-reviewer` (revue conventions + sécurité),
   `culturhub-screen-builder` (nouvel écran dans le design system).
 - **Skills** (`.claude/skills/`) : `culturhub-run` (démarrer/reset/seed la stack locale, gotchas
