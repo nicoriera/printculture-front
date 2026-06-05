@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       setUser(data.data.user);
-      router.push("/recommendations");
+      router.push("/");
     } catch (error) {
       throw error;
     } finally {
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       setUser(data.data.user);
-      router.push("/recommendations");
+      router.push("/");
     } catch (error) {
       throw error;
     } finally {

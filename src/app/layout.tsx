@@ -4,8 +4,8 @@ import AuthWrapper from "@/components/AuthWrapper";
 import Navigation from "@/components/Navigation";
 
 export const metadata: Metadata = {
-  title: "Print Culture",
-  description: "Partagez vos coups de cœur culturels entre amis",
+  title: "CULTURHUB",
+  description: "Votre bulle culturelle à deux — partagez, découvrez, inspirez-vous",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="antialiased bg-surface" suppressHydrationWarning>
         <AuthWrapper>
           <Navigation />
-          <main className="min-h-screen pt-16 lg:pt-20 pb-24 lg:pb-0">
+          <main className="min-h-screen lg:pt-20 pb-24 lg:pb-0">
             {children}
           </main>
         </AuthWrapper>

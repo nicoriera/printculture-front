@@ -2,6 +2,31 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Produit
+
+**CULTURHUB** — « votre bulle culturelle à deux ». App mobile-first où l'on partage et
+échange des recommandations culturelles (films, livres, musique, podcasts, expositions).
+L'espace est **partagé globalement** : toutes les recommandations et le fil de discussion
+sont visibles par tous les comptes de l'instance (« à deux » = l'instance). La marque
+affichée est **CULTURHUB** (le package reste `printculture-next`).
+
+> ⚠️ **L'app est dans le sous-dossier `printculture-next/`.** Toute commande `pnpm` doit s'y
+> exécuter : `cd printculture-next` ou `pnpm -C printculture-next <script>`. La lancer depuis
+> le parent échoue avec `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND`.
+
+### Écrans & routes
+| Route | Écran | Notes |
+|---|---|---|
+| `/` | Onboarding (déconnecté) / Feed (connecté) | `src/app/page.tsx` — `Onboarding` sombre + `Feed` (onglets *Pour vous* / *Pour moi*) |
+| `/login`, `/register` | Auth | `<AuthForm mode=… />` |
+| `/recommendations/[id]` | Détail (fond `bg-ink`) | méta auteur/année/éditeur/langue, *À propos*, *Notre avis*, bouton **Partager** → poste dans le chat |
+| `/echanges` | Chat « Échanges » | onglets *Discussion* / *Suggestions*, fil partagé, polling 4 s |
+| `/recherche` | Recherche/filtre | sur les recommandations existantes |
+| `/profil` | Profil | infos compte + déconnexion |
+
+Navigation : barre basse mobile à 5 onglets dans `src/components/Navigation.tsx`
+(Accueil · Recherche · ➕ FAB · Échanges · Profil), visible une fois connecté.
+
 ## Commands
 
 ```bash
@@ -82,24 +107,52 @@ export async function POST(request: NextRequest) {
 
 ### Auth
 
-JWT tokens (7-day, HS256) stockés en httpOnly cookie `auth-token`. `JWT_SECRET` est **requis** en env — absence = erreur au démarrage (pas de fallback). Le middleware `middleware.ts` protège toutes les routes `/recommendations/*`.
+JWT tokens (7-day, HS256) stockés en httpOnly cookie `auth-token`. `JWT_SECRET` est **requis** en env — absence = erreur au démarrage (pas de fallback). Le middleware `middleware.ts` protège les préfixes `/recommendations`, `/echanges`, `/recherche`, `/profil` — **ajouter toute nouvelle route protégée à cette liste**. `useAuth` redirige vers `/` (le feed) après login/register.
 
 `useAuth` hook (`src/hooks/useAuth.tsx`) expose : `user`, `isLoading`, `login()`, `register()`, `logout()`. `AuthContextType` est défini une seule fois dans `src/types/user.ts`.
 
 ### Components
 
 - `<AuthForm mode="login"|"register" />` — formulaire auth partagé
-- `<CategorySection category items onDelete />` — section par catégorie
-- `<RecommendationCard recommendation onDelete />` — carte individuelle
-- `<RecommendationModal isOpen onClose onSubmit isMobile />` — modal de création
+- `<RecommendationModal isOpen onClose onSubmit isMobile />` — modal de création (tous les champs éditoriaux)
+- `<FeedCard recommendation />` — ligne du feed/recherche (vignette + texte éditorial)
+- `<Tabs tabs active onChange />` — barre d'onglets soulignée (feed + chat)
+- `<BrandMark />` — logo en arcs concentriques
+- Helpers d'affichage utilisateur : `getInitial()` / `displayName()` dans `src/lib/user.ts`
+
+### Hooks de données
+
+- `useRecommendations()` — liste + CRUD des recommandations.
+- `useMessages()` — fil de chat partagé, **polling toutes les 4 s** (pas de websocket). Pourra
+  passer à Supabase Realtime plus tard.
 
 ### Database
 
-Prisma singleton à `src/lib/prisma.ts`. Schema : `User` + `Recommendation` (avec relation optionnelle `userId`). Indexes sur `category`, `createdAt`, `userId`. Après chaque modification de `prisma/schema.prisma` : `pnpm db:generate`.
+Prisma singleton à `src/lib/prisma.ts`. Modèles : `User`, `Recommendation`, `Message`.
+- `Recommendation` : champs de base + champs éditoriaux **optionnels** (`author`, `year`,
+  `publisher`, `language`, `imageUrl`, `tagline`, `opinion`) + relation optionnelle `userId`.
+  Catégories (`src/lib/schemas.ts`) : `Movie | Book | Music | Podcast | Exhibition`.
+- `Message` : `content`, `userId` (expéditeur), `recommendationId?` (reco partagée dans une bulle),
+  `createdAt`. Sert le fil partagé de `/echanges`.
+
+Indexes sur `category`, `createdAt`, `userId`. Après modif de `prisma/schema.prisma` :
+`pnpm db:generate` puis `local:reset` (local) ou `db:migrate` (DB distante joignable).
+**Ajouter un champ Recommendation : suivre le skill `culturhub-add-field`** (ordre Zod → Prisma → types → API → form → UI).
 
 ### File storage
 
-Supabase Storage bucket `recommendations-files`. Helpers dans `src/lib/supabase.ts`. Upload via `POST /api/upload`.
+Supabase Storage bucket `recommendations-files`. Helpers dans `src/lib/supabase.ts`. Upload via `POST /api/upload` (validation MIME par magic-bytes, taille max 10 Mo, allowlist d'extensions, nom de fichier assaini).
+
+### Sécurité (à respecter)
+
+- **URLs fournies par l'utilisateur → toujours `safeUrl()`** (`src/lib/schemas.ts`), qui rejette
+  localhost/IP privées (anti-SSRF). S'applique à `link`, `videoLink`, `imageUrl`.
+- **Images distantes arbitraires** : rendues avec `<Image unoptimized />` (FeedCard, détail) pour
+  que l'optimiseur Next ne serve **pas** de proxy ouvert. Ne **jamais** mettre
+  `images.remotePatterns` à `hostname: "**"`.
+- **Rate limiting** (`src/lib/ratelimit.ts`, en mémoire, mono-instance) sur les routes
+  sensibles/spammables : auth (`login`/`register`) et `POST /api/messages`.
+- Routes mutantes : auth → validation Zod → `userId: payload.userId` (ownership).
 
 ### Styling
 
@@ -120,9 +173,19 @@ pnpm db:generate   # regénérer le client Prisma
 pnpm db:migrate    # appliquer la migration en dev
 ```
 
-**Config Claude Code :**
-- Permissions + hook Stop : `/Users/nicolas/DEV/Projets/printculture/.claude/settings.local.json`
-- Ce fichier : `printculture-next/CLAUDE.md`
+**Config Claude Code** (à la racine du repo, `../.claude/` depuis ce dossier) :
+- Permissions + hook Stop : `.claude/settings.local.json`
+- **Lancement des serveurs** : `.claude/launch.json` (servers `next-dev` :3000, `supabase` :54321,
+  `prisma-studio` :5555). Utiliser l'outil `preview_start <name>` plutôt que Bash. Les configs
+  ciblent le sous-dossier via `pnpm -C printculture-next …`.
+- **Agents** (`.claude/agents/`) : `culturhub-reviewer` (revue conventions + sécurité),
+  `culturhub-screen-builder` (nouvel écran dans le design system).
+- **Skills** (`.claude/skills/`) : `culturhub-run` (démarrer/reset/seed la stack locale, gotchas
+  `.env` vs `.env.local`), `culturhub-add-field` (ajouter un champ Recommendation de bout en bout).
+
+**Note historique :** le scaffolding Vue d'avant la migration (`src/views`, `src/router`,
+`src/stores`, `src/main.ts`, `index.html`, configs vite/vitest, etc.) a été supprimé — il n'y a
+plus de dépendance `vue`. Le dossier `cypress/` subsiste mais sans runner installé.
 
 ## Required environment variables
 

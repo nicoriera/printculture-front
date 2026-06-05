@@ -83,8 +83,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
     <section className="bg-surface w-dvw h-dvh flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <Link href="/" className="block font-serif text-xl text-ink mb-10 hover:text-muted transition-colors">
-          Printculture
+        <Link href="/" className="block font-serif text-xl tracking-[0.3em] text-ink mb-10 hover:text-muted transition-colors">
+          CULTURHUB
         </Link>
 
         <div className="mb-10">
