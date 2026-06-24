@@ -10,9 +10,11 @@ The project is flat — run every `pnpm` command from the repo root (no subdirec
 ## Environment gotcha
 - Next.js dev loads **`.env.local`** (local Supabase, `DATABASE_URL=…@localhost:54322`) with
   priority over `.env` — so `pnpm dev` talks to the **local** DB.
-- Prisma CLI commands (`db:studio`, `db:migrate`) load **`.env`** by default, which points at
-  the **remote** Supabase project (often paused). To point a Prisma CLI command at local,
-  prefix it: `DATABASE_URL="postgresql://postgres:postgres@localhost:54322/postgres" pnpm db:studio`.
+- Prisma CLI commands (`db:migrate`, `db:reset`) load **`.env`** by default, which points at
+  the **remote** Supabase project (often paused). To target local, prefix with
+  `DATABASE_URL="postgresql://postgres:postgres@localhost:54322/postgres" …`.
+- **Prisma Studio on the local DB**: use `pnpm db:studio:local` (the `prisma-studio` launch
+  config already uses it). Plain `pnpm db:studio` hits the remote `.env` DB.
 
 ## Start order (servers are defined in `.claude/launch.json`)
 Prefer the `preview_start` tool over raw Bash for long-running servers.
@@ -20,7 +22,7 @@ Prefer the `preview_start` tool over raw Bash for long-running servers.
    - If it reports "already running" but a container has exited, run
      `pnpm local:stop` then start again.
 2. **next-dev** (port 3000) — the app.
-3. **prisma-studio** (port 5555, optional) — GUI; point it at local (see env gotcha).
+3. **prisma-studio** (port 5555, optional) — GUI on the local DB via `db:studio:local`.
 
 ## Apply schema + seed to the local DB
 ```bash

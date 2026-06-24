@@ -10,7 +10,7 @@
     {
       "name": "prisma-studio",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["db:studio"],
+      "runtimeArgs": ["db:studio:local"],
       "port": 5555
     },
     {
