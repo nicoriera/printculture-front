@@ -10,10 +10,9 @@ L'espace est **partagé globalement** : toutes les recommandations et le fil de 
 sont visibles par tous les comptes de l'instance (« à deux » = l'instance). La marque
 affichée est **CULTURHUB** (le package reste `printculture-next`).
 
-> ⚠️ **La racine du projet est ce dossier `printculture-next/`** (git, `package.json`,
-> `.claude/`, CLAUDE.md y vivent). Ouvre/lance tout d'ici. Un dossier parent
-> `printculture/` l'enveloppe encore mais ne contient plus rien d'utile ; lancer `pnpm`
-> depuis ce parent échoue avec `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND`.
+> ℹ️ Le projet est **à plat** : git, `package.json`, `.claude/` et CLAUDE.md sont à la
+> racine du dépôt. Les commandes `pnpm` se lancent ici (plus de sous-dossier).
+> Le package npm garde le nom historique `printculture-next`.
 
 ### Écrans & routes
 | Route | Écran | Notes |

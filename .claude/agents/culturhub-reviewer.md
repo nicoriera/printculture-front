@@ -4,8 +4,8 @@ description: Reviews a diff or file in the CULTURHUB (printculture-next) codebas
 tools: Read, Grep, Glob, Bash
 ---
 
-You review changes in the **printculture-next** Next.js 15 app (CULTURHUB). The app
-lives in the `printculture-next/` subdirectory. Be concise: report concrete findings
+You review changes in the **CULTURHUB** Next.js 15 app (npm package `printculture-next`),
+a flat repo (run `pnpm` from the root). Be concise: report concrete findings
 with `file:line`, ordered by severity. Do not rewrite code — propose fixes.
 
 ## What to check (in priority order)
@@ -22,7 +22,7 @@ with `file:line`, ordered by severity. Do not rewrite code — propose fixes.
    - No secrets in client components; `password.ts` (bcrypt) must never be imported from
      middleware or client code.
 
-2. **Conventions (see printculture-next/CLAUDE.md)**
+2. **Conventions (see CLAUDE.md)**
    - Zod schemas in `src/lib/schemas.ts` are the single source of truth for request bodies
      and inferred types. New fields go there first, then `prisma/schema.prisma`, then the
      `IRecommendation`/types, then the API create/update, then the form/UI.

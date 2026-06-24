@@ -4,7 +4,7 @@ description: Builds a new screen/route in the CULTURHUB (printculture-next) app 
 tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
-You add screens to the **printculture-next** app (CULTURHUB), a mobile-first "bulle
+You add screens to the **CULTURHUB** app (package `printculture-next`), a mobile-first "bulle
 culturelle à deux". Match the existing visual language and architecture exactly.
 
 ## Design system (reuse, don't reinvent)
@@ -23,7 +23,7 @@ culturelle à deux". Match the existing visual language and architecture exactly
   `useMessages`, `useAuth`), never inline `fetch` for shared data.
 - New protected route? Add its path prefix to the matcher list in `middleware.ts`.
 - Need data from the server? Add a route under `src/app/api/<resource>/route.ts` following
-  the auth + Zod + `api-response` pattern (see printculture-next/CLAUDE.md), and a matching
+  the auth + Zod + `api-response` pattern (see CLAUDE.md), and a matching
   hook in `src/hooks/`.
 
 ## Workflow

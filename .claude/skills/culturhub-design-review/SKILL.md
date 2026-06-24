@@ -10,7 +10,7 @@ projet au lieu de regénérer tokens/IA. **Lecture seule par défaut** : produit
 n'applique des corrections que si on le demande.
 
 ## 0. Pré-requis
-Racine = `printculture-next/`. Stack lancée via `.claude/launch.json` — voir le skill
+Racine = racine du dépôt (projet à plat). Stack lancée via `.claude/launch.json` — voir le skill
 [`culturhub-run`]. Login de seed : `marie@example.com` / `password`.
 
 ## 1. Capturer les écrans (preview MCP)

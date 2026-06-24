@@ -10,9 +10,8 @@ Guidance for Codex (and other coding agents) working in this repository.
 
 ## Spécifique aux agents
 
-- **Racine du projet = ce dossier `printculture-next/`** (git, `package.json`, `.claude/`,
-  `CLAUDE.md`). Lance `pnpm` ici ; depuis le dossier parent `printculture/` ça échoue avec
-  `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND`.
+- **Projet à plat** : git, `package.json`, `.claude/`, `CLAUDE.md` sont à la racine du dépôt.
+  Lance `pnpm` ici (plus de sous-dossier). Le package npm garde le nom `printculture-next`.
 - Avant de coder : lire `CLAUDE.md` puis les « sources de vérité » qu'il liste
   (`src/lib/schemas.ts`, `src/lib/categories.ts`, `src/lib/api-response.ts`, `src/lib/auth.ts`).
 - Après changement : `pnpm type-check` puis `pnpm lint` (et `pnpm build` si routing/config Next).
