@@ -167,6 +167,18 @@ Tailwind CSS v4 via `@import "tailwindcss"` dans `src/app/globals.css`. Tokens d
 - `main` reste l'unique tronc, toujours déployable (GitHub Flow solo). Merge via PR.
 - Ne supprimer une branche distante avec des commits non mergés qu'après confirmation explicite.
 
+**Messages de commit : [Conventional Commits](https://www.conventionalcommits.org).**
+`type(scope): résumé` à l'impératif, minuscule. Types : `feat`, `fix`, `refactor`, `chore`,
+`docs`, `test`, `perf`, `build`, `ci`. Scope optionnel (ex. `feat(chat): …`). Corps si besoin
+pour le *pourquoi* ; `!` ou `BREAKING CHANGE:` pour une rupture.
+
+**Avant chaque commit — vérifier et refactoriser :**
+1. `pnpm type-check` + `pnpm lint` (0 erreur ; le warning `useRecommendations` exhaustive-deps est connu).
+2. Relire le diff : factoriser les doublons, retirer le code mort, réutiliser les helpers/composants
+   existants (`lib/`, `components/`) — **sans sur-ingénierie** (pas d'abstraction prématurée, pas de
+   couche utilisée une seule fois). Suivre les patterns en place plutôt qu'en inventer.
+3. Pour un audit ciblé du diff, l'agent `culturhub-reviewer` couvre conventions + sécurité.
+
 ## Workflow agent
 
 **Validation automatique :** un hook `Stop` lance `pnpm type-check` à la fin de chaque réponse Claude Code. Si des erreurs TypeScript apparaissent, elles s'affichent au début du tour suivant — pas besoin de lancer manuellement.
