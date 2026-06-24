@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { IRecommendation } from "@/types/recommendation";
 import { CATEGORY_LABELS } from "@/lib/categories";
+import { buildShareContent } from "@/lib/messages";
 
 function MetaItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
@@ -52,13 +53,27 @@ export default function RecommendationDetailPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: `Je te partage « ${recommendation.title} »`,
+          content: buildShareContent(recommendation.title),
           recommendationId: recommendation.id,
         }),
       });
       router.push("/echanges");
     } catch {
       setSharing(false);
+    }
+  };
+
+  /** Partage externe : Web Share natif, sinon copie le lien dans le presse-papier. */
+  const shareExternal = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: recommendation?.title, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+      }
+    } catch {
+      // partage annulé par l'utilisateur — rien à faire
     }
   };
 
@@ -201,7 +216,7 @@ export default function RecommendationDetailPage() {
                 src={rec.videoLink}
                 title="Vidéo"
                 frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
                 className="w-full h-56 md:h-72"
@@ -225,7 +240,8 @@ export default function RecommendationDetailPage() {
           {/* Actions */}
           <div className="flex items-center gap-3 pt-2">
             <button
-              aria-label="Partager (autre)"
+              onClick={shareExternal}
+              aria-label="Partager le lien"
               className="w-12 h-12 rounded-full bg-rose-light flex items-center justify-center text-ink hover:bg-rose transition-colors shrink-0">
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 16V4m0 0L8 8m4-4l4 4M5 14v4a2 2 0 002 2h10a2 2 0 002-2v-4" />

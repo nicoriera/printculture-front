@@ -8,7 +8,9 @@ import { useRecommendations } from "@/hooks/useRecommendations";
 import { IMessage, IRecommendation } from "@/types/recommendation";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import { getInitial } from "@/lib/user";
+import { buildShareContent } from "@/lib/messages";
 import Tabs from "@/components/Tabs";
+import RecoThumbnail from "@/components/RecoThumbnail";
 
 const TABS = ["Discussion", "Suggestions"] as const;
 type Tab = (typeof TABS)[number];
@@ -33,9 +35,7 @@ function timeLabel(date: Date) {
 function SharedReco({ rec }: { rec: IRecommendation }) {
   return (
     <Link href={`/recommendations/${rec.id}`} className="flex gap-3 items-center mb-2">
-      <span className="w-10 h-12 rounded-md bg-ink/80 flex items-center justify-center font-serif text-surface text-sm shrink-0">
-        {rec.title.charAt(0)}
-      </span>
+      <RecoThumbnail rec={rec} className="w-10 h-12 rounded-md bg-ink/80" textClassName="text-surface text-sm" />
       <span className="min-w-0">
         <span className="block font-serif text-ink leading-tight truncate">{rec.title}</span>
         {rec.author && <span className="block text-xs text-muted truncate">{rec.author}</span>}
@@ -106,10 +106,7 @@ export default function EchangesPage() {
 
   const shareReco = async (rec: IRecommendation) => {
     setTab("Discussion");
-    await sendMessage({
-      content: `Je te partage « ${rec.title} »`,
-      recommendationId: rec.id,
-    });
+    await sendMessage({ content: buildShareContent(rec.title), recommendationId: rec.id });
   };
 
   return (
@@ -194,9 +191,7 @@ export default function EchangesPage() {
                 key={rec.id}
                 onClick={() => shareReco(rec)}
                 className="w-full text-left flex gap-3 items-center rounded-2xl bg-white/70 border border-ink/5 p-3 hover:shadow-md transition-all">
-                <span className="w-12 h-12 rounded-lg bg-rose-light flex items-center justify-center font-serif text-ink shrink-0">
-                  {rec.title.charAt(0)}
-                </span>
+                <RecoThumbnail rec={rec} className="w-12 h-12 rounded-lg bg-rose-light" textClassName="text-ink" />
                 <span className="min-w-0 flex-1">
                   {rec.category && (
                     <span className="block text-[0.6rem] uppercase tracking-[0.18em] text-subtle">

@@ -26,8 +26,13 @@ export async function verifyToken(
   token: string
 ): Promise<{ userId: number; email: string } | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
-    return payload as { userId: number; email: string };
+    // Pin the algorithm so a forged `alg` header can't be substituted.
+    const { payload } = await jwtVerify(token, JWT_SECRET, { algorithms: ["HS256"] });
+    // Validate the claim shape rather than blindly casting.
+    if (typeof payload.userId === "number" && typeof payload.email === "string") {
+      return { userId: payload.userId, email: payload.email };
+    }
+    return null;
   } catch {
     return null;
   }
