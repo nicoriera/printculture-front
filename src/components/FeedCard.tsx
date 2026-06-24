@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { IRecommendation } from "@/types/recommendation";
 import { CATEGORY_LABELS, getCategoryColor } from "@/lib/categories";
+import RecoThumbnail from "@/components/RecoThumbnail";
 
 interface FeedCardProps {
   recommendation: IRecommendation;
@@ -24,22 +24,11 @@ export default function FeedCard({ recommendation: rec }: FeedCardProps) {
       href={`/recommendations/${rec.id}`}
       className="group flex gap-4 rounded-2xl bg-white/70 border border-ink/5 p-3 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
       {/* Thumbnail */}
-      <div className={`relative shrink-0 w-24 h-24 rounded-xl overflow-hidden ${categoryBg} flex items-center justify-center`}>
-        {rec.imageUrl ? (
-          <Image
-            src={rec.imageUrl}
-            alt={rec.title}
-            fill
-            sizes="96px"
-            // Covers are arbitrary user URLs — serve as-is to avoid the optimizer
-            // acting as an open image proxy (SSRF). See next.config.ts.
-            unoptimized
-            className="object-cover"
-          />
-        ) : (
-          <span className="font-serif text-2xl text-ink/40">{rec.title.charAt(0)}</span>
-        )}
-      </div>
+      <RecoThumbnail
+        rec={rec}
+        className={`w-24 h-24 rounded-xl ${categoryBg}`}
+        textClassName="text-2xl text-ink/40"
+      />
 
       {/* Content */}
       <div className="flex-1 min-w-0 py-1">

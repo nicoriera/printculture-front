@@ -27,24 +27,52 @@ export const RECOMMENDATION_CATEGORIES = ["Movie", "Book", "Music", "Podcast", "
 /** Union type of all valid recommendation categories. */
 export type RecommendationCategory = (typeof RECOMMENDATION_CATEGORIES)[number];
 
-/** Rejects localhost and private network URLs to prevent SSRF. */
+/** True for localhost, private ranges and link-local/cloud-metadata hosts (SSRF surface). */
+function isPrivateHost(hostname: string): boolean {
+  const h = hostname.replace(/^\[|\]$/g, ""); // strip IPv6 brackets
+  return (
+    ["localhost", "127.0.0.1", "0.0.0.0", "::1"].includes(h) ||
+    /^(10|127)\./.test(h) ||
+    /^192\.168\./.test(h) ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(h) || // 172.16.0.0/12
+    /^169\.254\./.test(h) || // link-local + 169.254.169.254 cloud metadata
+    h.endsWith(".internal") ||
+    h.endsWith(".local")
+  );
+}
+
+/** Rejects non-http(s) schemes and localhost/private/link-local hosts to prevent SSRF. */
 const safeUrl = (errorMessage: string) =>
   z
     .string()
     .url(errorMessage)
     .refine((url) => {
       try {
-        const { hostname } = new URL(url);
-        return (
-          !["localhost", "127.0.0.1", "0.0.0.0", "::1"].includes(hostname) &&
-          !hostname.startsWith("192.168.") &&
-          !hostname.startsWith("10.") &&
-          !hostname.startsWith("172.")
-        );
+        const { protocol, hostname } = new URL(url);
+        return (protocol === "https:" || protocol === "http:") && !isPrivateHost(hostname);
       } catch {
         return false;
       }
     }, "URL non autorisée");
+
+/** Allowed video embed hosts — limits where an `<iframe src>` can point. */
+const EMBED_HOSTS = new Set([
+  "www.youtube.com",
+  "youtube.com",
+  "www.youtube-nocookie.com",
+  "youtube-nocookie.com",
+  "player.vimeo.com",
+]);
+
+/** A safe URL further restricted to known video embed providers (YouTube/Vimeo). */
+const embedUrl = (errorMessage: string) =>
+  safeUrl(errorMessage).refine((url) => {
+    try {
+      return EMBED_HOSTS.has(new URL(url).hostname);
+    } catch {
+      return false;
+    }
+  }, "Hébergeur vidéo non autorisé (YouTube ou Vimeo)");
 
 /** Zod schema for creating a recommendation. Source of truth for the POST /api/recommendations body. */
 export const RecommendationCreateSchema = z.object({
@@ -53,7 +81,7 @@ export const RecommendationCreateSchema = z.object({
   category: z.enum(RECOMMENDATION_CATEGORIES).optional().describe("Catégorie : Movie | Book | Music | Podcast | Exhibition"),
   link: safeUrl("URL invalide").optional().or(z.literal("")).describe("Lien externe (site, article…)"),
   tag: z.string().max(100).optional().describe("Tag ou mot-clé libre"),
-  videoLink: safeUrl("URL de vidéo invalide").optional().or(z.literal("")).describe("URL d'embed vidéo (YouTube, Vimeo…)"),
+  videoLink: embedUrl("URL de vidéo invalide").optional().or(z.literal("")).describe("URL d'embed vidéo (YouTube, Vimeo…)"),
   fileUrl: z.string().optional().describe("URL Supabase Storage du fichier attaché"),
   fileName: z.string().optional().describe("Nom original du fichier attaché"),
   // Champs éditoriaux (maquette CULTURHUB — écran de détail)

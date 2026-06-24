@@ -83,6 +83,8 @@ function Feed() {
 
   useEffect(() => {
     if (lastCreated) fetchRecommendations();
+    // Refetch only when a reco is created; `fetchRecommendations` is intentionally
+    // excluded (new identity each render → would loop).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastCreated]);
 
