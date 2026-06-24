@@ -5,9 +5,7 @@ description: Start, reset, or seed the CULTURHUB (printculture-next) local dev s
 
 # Running the CULTURHUB stack
 
-The app lives in the **`printculture-next/`** subdirectory — every `pnpm` command must run
-there. From the repo root use `pnpm <script>`, or `cd printculture-next`
-first. Running pnpm from the parent fails with `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND`.
+The project is flat — run every `pnpm` command from the repo root (no subdirectory).
 
 ## Environment gotcha
 - Next.js dev loads **`.env.local`** (local Supabase, `DATABASE_URL=…@localhost:54322`) with
