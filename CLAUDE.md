@@ -159,6 +159,14 @@ Supabase Storage bucket `recommendations-files`. Helpers dans `src/lib/supabase.
 
 Tailwind CSS v4 via `@import "tailwindcss"` dans `src/app/globals.css`. Tokens de couleurs par catégorie (`bg-category-movie`, etc.) définis là. Alias `@/*` → `src/*`.
 
+## Workflow git
+
+**Règle : une branche par modification. Jamais de commit direct sur `main`.**
+- Avant toute modif : `git switch -c <type>/<sujet>` (`feat/…`, `fix/…`, `chore/…`, `docs/…`).
+- Commits sur la branche, puis `git push -u origin <branche>` et `gh pr create --base main`.
+- `main` reste l'unique tronc, toujours déployable (GitHub Flow solo). Merge via PR.
+- Ne supprimer une branche distante avec des commits non mergés qu'après confirmation explicite.
+
 ## Workflow agent
 
 **Validation automatique :** un hook `Stop` lance `pnpm type-check` à la fin de chaque réponse Claude Code. Si des erreurs TypeScript apparaissent, elles s'affichent au début du tour suivant — pas besoin de lancer manuellement.
@@ -183,7 +191,8 @@ code (`settings.local.json` est git-ignoré car local à la machine) :
 - **Agents** (`.claude/agents/`) : `culturhub-reviewer` (revue conventions + sécurité),
   `culturhub-screen-builder` (nouvel écran dans le design system).
 - **Skills** (`.claude/skills/`) : `culturhub-run` (démarrer/reset/seed la stack locale, gotchas
-  `.env` vs `.env.local`), `culturhub-add-field` (ajouter un champ Recommendation de bout en bout).
+  `.env` vs `.env.local`), `culturhub-add-field` (ajouter un champ Recommendation de bout en bout),
+  `culturhub-design-review` (revue visuelle des écrans via le preview MCP vs maquette + tokens + a11y).
 
 **Note historique :** le scaffolding Vue d'avant la migration (`src/views`, `src/router`,
 `src/stores`, `src/main.ts`, `index.html`, configs vite/vitest, etc.) a été supprimé — il n'y a
