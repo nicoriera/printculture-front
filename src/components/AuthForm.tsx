@@ -94,7 +94,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="block mb-2 text-xs uppercase tracking-widest text-subtle">
+            <label htmlFor="email" className="block mb-2 text-xs uppercase tracking-widest text-muted">
               Email
             </label>
             <input
@@ -102,7 +102,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+              className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors"
               placeholder="votre@email.com"
               autoFocus
               required
@@ -110,7 +110,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           </div>
 
           <div>
-            <label htmlFor="password" className="block mb-2 text-xs uppercase tracking-widest text-subtle">
+            <label htmlFor="password" className="block mb-2 text-xs uppercase tracking-widest text-muted">
               Mot de passe
             </label>
             <input
@@ -119,11 +119,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+              className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors"
               required
             />
             {mode === "register" && (
-              <p className="text-xs text-subtle mt-2">
+              <p className="text-xs text-muted mt-2">
                 8 caractères minimum, une majuscule et un chiffre
               </p>
             )}
@@ -131,7 +131,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
           {mode === "register" && (
             <div>
-              <label htmlFor="confirm-password" className="block mb-2 text-xs uppercase tracking-widest text-subtle">
+              <label htmlFor="confirm-password" className="block mb-2 text-xs uppercase tracking-widest text-muted">
                 Confirmer
               </label>
               <input
@@ -140,7 +140,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+                className="w-full bg-white border border-rose-light rounded-full px-5 py-3 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors"
                 required
               />
             </div>

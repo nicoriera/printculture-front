@@ -129,7 +129,7 @@ export default function EchangesPage() {
           <>
             <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
               {isLoading && messages.length === 0 && (
-                <p className="text-center text-subtle text-sm py-10">Chargement…</p>
+                <p className="text-center text-muted text-sm py-10">Chargement…</p>
               )}
               {!isLoading && messages.length === 0 && (
                 <p className="text-center text-muted text-sm py-10">
@@ -138,7 +138,7 @@ export default function EchangesPage() {
               )}
               {grouped.map((group) => (
                 <div key={group.label} className="space-y-3">
-                  <p className="text-center text-[0.6rem] uppercase tracking-[0.25em] text-subtle py-1">
+                  <p className="text-center text-[0.6rem] uppercase tracking-[0.25em] text-muted py-1">
                     {group.label}
                   </p>
                   {group.items.map((m) => (
@@ -164,7 +164,7 @@ export default function EchangesPage() {
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder="Écrivez votre message…"
-                className="flex-1 bg-white border border-rose-light rounded-full px-5 py-2.5 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+                className="flex-1 bg-white border border-rose-light rounded-full px-5 py-2.5 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors"
               />
               <button
                 type="submit"
@@ -184,7 +184,7 @@ export default function EchangesPage() {
           <div className="flex-1 overflow-y-auto px-6 py-6 space-y-3">
             <p className="text-muted text-sm mb-2">Touchez une reco pour la partager dans la discussion.</p>
             {recommendations.length === 0 && (
-              <p className="text-subtle text-sm py-8 text-center">Aucune recommandation à partager.</p>
+              <p className="text-muted text-sm py-8 text-center">Aucune recommandation à partager.</p>
             )}
             {recommendations.map((rec) => (
               <button
@@ -194,14 +194,14 @@ export default function EchangesPage() {
                 <RecoThumbnail rec={rec} className="w-12 h-12 rounded-lg bg-rose-light" textClassName="text-ink" />
                 <span className="min-w-0 flex-1">
                   {rec.category && (
-                    <span className="block text-[0.6rem] uppercase tracking-[0.18em] text-subtle">
+                    <span className="block text-[0.6rem] uppercase tracking-[0.18em] text-muted">
                       {CATEGORY_LABELS[rec.category]}
                     </span>
                   )}
                   <span className="block font-serif text-ink leading-tight truncate">{rec.title}</span>
                   {rec.author && <span className="block text-xs text-muted truncate">{rec.author}</span>}
                 </span>
-                <span className="text-rose text-xs uppercase tracking-wide shrink-0">Partager</span>
+                <span className="text-rose-deep text-xs uppercase tracking-wide shrink-0">Partager</span>
               </button>
             ))}
           </div>

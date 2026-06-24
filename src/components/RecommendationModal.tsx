@@ -99,8 +99,8 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
 
   if (!isOpen) return null;
 
-  const inputClass = "w-full bg-white border border-ink/10 rounded-xl px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-rose transition-colors";
-  const labelClass = "block mb-1.5 text-xs uppercase tracking-widest text-subtle";
+  const inputClass = "w-full bg-white border border-ink/10 rounded-xl px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors";
+  const labelClass = "block mb-1.5 text-xs uppercase tracking-widest text-muted";
 
   return (
     <div
@@ -122,7 +122,7 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               onClick={onClose}
               type="button"
               aria-label="Fermer"
-              className="text-subtle hover:text-ink transition-colors">
+              className="text-muted hover:text-ink transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -278,7 +278,7 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               className={inputClass}
               placeholder="https://www.youtube.com/watch?v=…"
             />
-            <p className="text-xs text-subtle mt-1">Lien YouTube standard — converti automatiquement</p>
+            <p className="text-xs text-muted mt-1">Lien YouTube standard — converti automatiquement</p>
           </div>
 
           <div>

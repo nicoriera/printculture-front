@@ -41,6 +41,8 @@
   --ink-soft: #2A2A3C;
   --rose: #D6AFA0;
   --rose-light: #E9D5CC;
+  /* Rose foncé pour le TEXTE rose sur fond clair (AA : ~5:1 sur --surface) */
+  --rose-deep: #9B5436;
   --muted: #5B5853;
   --subtle: #A8A39B;
 
@@ -74,6 +76,7 @@
   --color-ink-soft: var(--ink-soft);
   --color-rose: var(--rose);
   --color-rose-light: var(--rose-light);
+  --color-rose-deep: var(--rose-deep);
   --color-muted: var(--muted);
   --color-subtle: var(--subtle);
 

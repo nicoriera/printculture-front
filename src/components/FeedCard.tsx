@@ -34,7 +34,7 @@ export default function FeedCard({ recommendation: rec }: FeedCardProps) {
       <div className="flex-1 min-w-0 py-1">
         <div className="flex items-start justify-between gap-2">
           {label && (
-            <span className="text-[0.65rem] uppercase tracking-[0.18em] text-subtle">{label}</span>
+            <span className="text-[0.65rem] uppercase tracking-[0.18em] text-muted">{label}</span>
           )}
           <button
             type="button"
@@ -43,7 +43,7 @@ export default function FeedCard({ recommendation: rec }: FeedCardProps) {
               e.preventDefault();
               setSaved((s) => !s);
             }}
-            className="-mt-0.5 text-subtle hover:text-ink transition-colors shrink-0">
+            className="-m-2 p-2 text-muted hover:text-ink transition-colors shrink-0">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
             </svg>

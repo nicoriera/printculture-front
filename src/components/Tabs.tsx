@@ -15,7 +15,7 @@ export default function Tabs<T extends string>({ tabs, active, onChange }: TabsP
           key={t}
           onClick={() => onChange(t)}
           className={`relative pb-3 text-sm tracking-wide transition-colors ${
-            active === t ? "text-ink" : "text-subtle hover:text-muted"
+            active === t ? "text-ink" : "text-muted hover:text-ink"
           }`}>
           {t}
           {active === t && (
