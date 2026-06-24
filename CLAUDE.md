@@ -199,8 +199,11 @@ code (`settings.local.json` est git-ignoré car local à la machine) :
 - **Lancement des serveurs** : `.claude/launch.json` (servers `next-dev` :3000, `supabase` :54321,
   `prisma-studio` :5555, commandes `pnpm` relatives à la racine). Utiliser l'outil
   `preview_start <name>` plutôt que Bash.
-- **Agents** (`.claude/agents/`) : `culturhub-reviewer` (revue conventions + sécurité),
-  `culturhub-screen-builder` (nouvel écran dans le design system).
+- **Agents** (`.claude/agents/`) — revue du diff (lecture seule), à lancer avant un commit/PR :
+  - `culturhub-reviewer` — revue large : conventions projet + correctness (+ rappel sécurité).
+  - `clean-code-reviewer` — qualité : lisibilité, DRY, **anti-sur-ingénierie**, code mort.
+  - `security-reviewer` — vulnérabilités : validation/SSRF, auth/authz, secrets, injection, XSS, upload.
+  - `culturhub-screen-builder` — construit un nouvel écran dans le design system.
 - **Skills** (`.claude/skills/`) : `culturhub-run` (démarrer/reset/seed la stack locale, gotchas
   `.env` vs `.env.local`), `culturhub-add-field` (ajouter un champ Recommendation de bout en bout),
   `culturhub-design-review` (revue visuelle des écrans via le preview MCP vs maquette + tokens + a11y).
