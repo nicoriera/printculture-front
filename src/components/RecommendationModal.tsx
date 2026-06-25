@@ -28,6 +28,24 @@ function toEmbedUrl(url: string): string {
   return url;
 }
 
+const inputClass =
+  "w-full bg-white border border-ink/10 rounded-xl px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors";
+const labelClass = "block mb-1.5 text-xs uppercase tracking-widest text-muted";
+
+/**
+ * Champ de formulaire : le `<label>` enveloppe l'input → association native
+ * (a11y, WCAG 3.3.2/1.3.1) sans avoir à gérer des `id`/`htmlFor`.
+ */
+function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className={labelClass}>{label}</span>
+      {children}
+      {hint && <p className="text-xs text-muted mt-1">{hint}</p>}
+    </label>
+  );
+}
+
 export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobile }: RecommendationModalProps) {
   const emptyForm: CreateRecommendationData = {
     title: "",
@@ -99,9 +117,6 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
 
   if (!isOpen) return null;
 
-  const inputClass = "w-full bg-white border border-ink/10 rounded-xl px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors";
-  const labelClass = "block mb-1.5 text-xs uppercase tracking-widest text-muted";
-
   return (
     <div
       className={`fixed inset-x-0 z-50 transition-all duration-300 ease-in-out ${
@@ -129,8 +144,7 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
             </button>
           </div>
 
-          <div>
-            <label className={labelClass}>Catégorie</label>
+          <Field label="Catégorie">
             <select
               value={formData.category ?? ""}
               onChange={(e) =>
@@ -146,10 +160,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
                 <option key={cat} value={cat}>{CATEGORY_LABELS[cat]}</option>
               ))}
             </select>
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Titre</label>
+          <Field label="Titre">
             <input
               type="text"
               value={formData.title}
@@ -158,11 +171,10 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="Ex : Parasite, 1984, Kind of Blue…"
               required
             />
-          </div>
+          </Field>
 
           <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className={labelClass}>Auteur</label>
+            <Field label="Auteur">
               <input
                 type="text"
                 value={formData.author}
@@ -170,9 +182,8 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
                 placeholder="Ex : Ahmet Altan"
                 className={inputClass}
               />
-            </div>
-            <div>
-              <label className={labelClass}>Année</label>
+            </Field>
+            <Field label="Année">
               <input
                 type="text"
                 value={formData.year}
@@ -180,9 +191,8 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
                 placeholder="Ex : 2021"
                 className={inputClass}
               />
-            </div>
-            <div>
-              <label className={labelClass}>Éditeur</label>
+            </Field>
+            <Field label="Éditeur">
               <input
                 type="text"
                 value={formData.publisher}
@@ -190,9 +200,8 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
                 placeholder="Ex : Actes Sud"
                 className={inputClass}
               />
-            </div>
-            <div>
-              <label className={labelClass}>Langue</label>
+            </Field>
+            <Field label="Langue">
               <input
                 type="text"
                 value={formData.language}
@@ -200,11 +209,10 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
                 placeholder="Ex : Français"
                 className={inputClass}
               />
-            </div>
+            </Field>
           </div>
 
-          <div>
-            <label className={labelClass}>Accroche</label>
+          <Field label="Accroche">
             <input
               type="text"
               value={formData.tagline}
@@ -212,10 +220,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="Un roman poignant sur l'exil…"
               className={inputClass}
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Image (URL)</label>
+          <Field label="Image (URL)">
             <input
               type="url"
               value={formData.imageUrl}
@@ -223,10 +230,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="https://… (couverture / affiche)"
               className={inputClass}
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>À propos</label>
+          <Field label="À propos">
             <textarea
               value={formData.description}
               onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
@@ -234,10 +240,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="Le résumé, le contexte…"
               className={`${inputClass} resize-none`}
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Notre avis</label>
+          <Field label="Notre avis">
             <input
               type="text"
               value={formData.opinion}
@@ -245,10 +250,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="Coup de cœur partagé ❤"
               className={inputClass}
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Tag</label>
+          <Field label="Tag">
             <input
               type="text"
               value={formData.tag}
@@ -256,10 +260,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="Ex : thriller, jazz, classique…"
               className={inputClass}
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Lien</label>
+          <Field label="Lien">
             <input
               type="url"
               value={formData.link}
@@ -267,10 +270,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               placeholder="https://…"
               className={inputClass}
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Lien vidéo</label>
+          <Field label="Lien vidéo" hint="Lien YouTube standard — converti automatiquement">
             <input
               type="url"
               value={formData.videoLink}
@@ -278,11 +280,9 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
               className={inputClass}
               placeholder="https://www.youtube.com/watch?v=…"
             />
-            <p className="text-xs text-muted mt-1">Lien YouTube standard — converti automatiquement</p>
-          </div>
+          </Field>
 
-          <div>
-            <label className={labelClass}>Fichier</label>
+          <Field label="Fichier">
             <div className="relative">
               <input
                 ref={fileInputRef}
@@ -305,7 +305,7 @@ export default function RecommendationModal({ isOpen, onClose, onSubmit, isMobil
             {formData.fileName && !isUploading && (
               <p className="text-xs text-muted mt-1">✓ {formData.fileName}</p>
             )}
-          </div>
+          </Field>
 
           {error && (
             <p className="text-sm text-red-500 bg-red-50 rounded-xl px-4 py-2.5">{error}</p>
