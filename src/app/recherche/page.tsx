@@ -29,7 +29,7 @@ export default function RecherchePage() {
 
         {/* Search field */}
         <div className="relative mb-5">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
             </svg>
@@ -39,7 +39,7 @@ export default function RecherchePage() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Titre, auteur, mot-clé…"
             autoFocus
-            className="w-full bg-white border border-rose-light rounded-full pl-12 pr-5 py-3 text-ink text-sm focus:outline-none focus:border-rose transition-colors"
+            className="w-full bg-white border border-rose-light rounded-full pl-12 pr-5 py-3 text-ink text-sm focus:outline-none focus:border-rose focus-visible:ring-2 focus-visible:ring-rose-deep focus-visible:ring-offset-1 transition-colors"
           />
         </div>
 
@@ -57,7 +57,7 @@ export default function RecherchePage() {
 
         {/* Results */}
         {isLoading && recommendations.length === 0 ? (
-          <p className="text-subtle text-sm">Chargement…</p>
+          <p className="text-muted text-sm">Chargement…</p>
         ) : results.length === 0 ? (
           <p className="text-muted text-sm py-10 text-center">Aucun résultat.</p>
         ) : (

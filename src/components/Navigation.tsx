@@ -107,7 +107,7 @@ function TabItem({
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center gap-1 transition-colors ${active ? "text-ink" : "text-subtle"}`}>
+      className={`flex flex-col items-center gap-1 transition-colors ${active ? "text-ink" : "text-muted"}`}>
       {icon}
       <span className="text-[0.65rem] tracking-wide">{label}</span>
     </Link>

@@ -134,7 +134,7 @@ function Feed() {
         </div>
 
         {/* Section label */}
-        <p className="text-[0.65rem] uppercase tracking-[0.25em] text-subtle mb-4">
+        <p className="text-[0.65rem] uppercase tracking-[0.25em] text-muted mb-4">
           {tab === "Pour vous" ? "Aujourd'hui" : "Mes partages"}
         </p>
 

@@ -105,7 +105,7 @@ export default function RecommendationDetailPage() {
     <div className="min-h-screen bg-ink flex flex-col">
       {/* Top bar */}
       <div className="flex items-center justify-between px-6 pt-6 pb-2 max-w-2xl w-full mx-auto">
-        <button onClick={goBack} aria-label="Retour" className="text-surface hover:text-rose transition-colors">
+        <button onClick={goBack} aria-label="Retour" className="-m-1 p-1 text-surface hover:text-rose transition-colors">
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
@@ -114,12 +114,12 @@ export default function RecommendationDetailPage() {
           <button
             onClick={() => setSaved((s) => !s)}
             aria-label="Enregistrer"
-            className="hover:text-rose transition-colors">
+            className="-m-1 p-1 hover:text-rose transition-colors">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth={1.6}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
             </svg>
           </button>
-          <button aria-label="Plus d'options" className="hover:text-rose transition-colors">
+          <button aria-label="Plus d'options" className="-m-1 p-1 hover:text-rose transition-colors">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <circle cx="12" cy="5" r="1.6" /><circle cx="12" cy="12" r="1.6" /><circle cx="12" cy="19" r="1.6" />
             </svg>
@@ -195,7 +195,7 @@ export default function RecommendationDetailPage() {
         <div className="max-w-2xl mx-auto">
           {rec.description && (
             <>
-              <h2 className="text-rose text-xs uppercase tracking-[0.25em] mb-3">À propos</h2>
+              <h2 className="text-rose-deep text-xs uppercase tracking-[0.25em] mb-3">À propos</h2>
               <p className="text-muted leading-relaxed mb-8">{rec.description}</p>
             </>
           )}
@@ -205,7 +205,7 @@ export default function RecommendationDetailPage() {
               href={rec.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block text-rose text-sm underline underline-offset-2 hover:text-ink transition-colors mb-8">
+              className="inline-block text-rose-deep text-sm underline underline-offset-2 hover:text-ink transition-colors mb-8">
               Voir le lien →
             </a>
           )}
@@ -226,7 +226,7 @@ export default function RecommendationDetailPage() {
 
           {rec.opinion && (
             <>
-              <h2 className="text-rose text-xs uppercase tracking-[0.25em] mb-4">Notre avis</h2>
+              <h2 className="text-rose-deep text-xs uppercase tracking-[0.25em] mb-4">Notre avis</h2>
               <div className="flex items-center gap-3 mb-8">
                 <div className="flex -space-x-2">
                   <span className="w-8 h-8 rounded-full bg-rose-light border-2 border-surface" />
@@ -255,7 +255,7 @@ export default function RecommendationDetailPage() {
             </button>
           </div>
 
-          <p className="text-xs text-subtle uppercase tracking-widest mt-8">
+          <p className="text-xs text-muted uppercase tracking-widest mt-8">
             Ajouté le{" "}
             {rec.createdAt &&
               new Date(rec.createdAt).toLocaleDateString("fr-FR", {

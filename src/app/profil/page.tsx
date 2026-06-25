@@ -35,7 +35,7 @@ export default function ProfilPage() {
             {initial}
           </div>
           <p className="text-ink text-lg">{user.email}</p>
-          <p className="text-subtle text-xs uppercase tracking-widest mt-1">Membre depuis {memberSince}</p>
+          <p className="text-muted text-xs uppercase tracking-widest mt-1">Membre depuis {memberSince}</p>
         </div>
 
         {/* Stats */}
