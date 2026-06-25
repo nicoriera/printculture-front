@@ -1,5 +1,8 @@
 [build]
   command = "pnpm build"
+  # Surcharge le réglage UI hérité (`dist`, ère Vue). Next.js publie dans `.next` ;
+  # le plugin @netlify/plugin-nextjs le transforme ensuite.
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18.19.1"
