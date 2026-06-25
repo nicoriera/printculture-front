@@ -3,20 +3,20 @@
   "configurations": [
     {
       "name": "next-dev",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "export NVM_DIR=\"$HOME/.nvm\"; [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use --silent; exec pnpm dev"],
       "port": 3000
     },
     {
       "name": "prisma-studio",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["db:studio:local"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "export NVM_DIR=\"$HOME/.nvm\"; [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use --silent; exec pnpm db:studio:local"],
       "port": 5555
     },
     {
       "name": "supabase",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["local:start"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "export NVM_DIR=\"$HOME/.nvm\"; [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use --silent; exec pnpm local:start"],
       "port": 54321
     }
   ]
