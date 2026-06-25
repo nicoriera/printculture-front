@@ -1,9 +1,17 @@
 import { SignJWT, jwtVerify } from "jose";
 
-if (!process.env.JWT_SECRET) {
-  throw new Error("JWT_SECRET environment variable is required");
+/**
+ * Returns the encoded JWT signing key. `JWT_SECRET` est **requis** (pas de fallback) —
+ * vérifié à l'usage (runtime) plutôt qu'à l'import du module, pour que `next build`
+ * réussisse sans secret tout en garantissant l'erreur au runtime si absent.
+ */
+function getJwtSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET environment variable is required");
+  }
+  return new TextEncoder().encode(secret);
 }
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 /** Signs a JWT containing `userId` and `email`, valid for 7 days. */
 export async function createToken(payload: {
@@ -14,7 +22,7 @@ export async function createToken(payload: {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
-    .sign(JWT_SECRET);
+    .sign(getJwtSecret());
 }
 
 /**
@@ -27,7 +35,7 @@ export async function verifyToken(
 ): Promise<{ userId: number; email: string } | null> {
   try {
     // Pin the algorithm so a forged `alg` header can't be substituted.
-    const { payload } = await jwtVerify(token, JWT_SECRET, { algorithms: ["HS256"] });
+    const { payload } = await jwtVerify(token, getJwtSecret(), { algorithms: ["HS256"] });
     // Validate the claim shape rather than blindly casting.
     if (typeof payload.userId === "number" && typeof payload.email === "string") {
       return { userId: payload.userId, email: payload.email };
