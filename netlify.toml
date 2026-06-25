@@ -1,16 +1,10 @@
 [build]
-  # Répertoire de construction de l'application
-  publish = "dist"
-  # Commande de construction
-  command = "npm run build"
+  command = "pnpm build"
 
 [build.environment]
   NODE_VERSION = "18.19.1"
 
-
-
-[[redirects]]
-  # Redirection pour traiter les routes côté client
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Runtime Next.js officiel : gère le SSR, les routes API et la publication.
+# (Remplace l'ancienne config Vue/Vite : publish=dist + redirect SPA /index.html.)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
